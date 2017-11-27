@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	
+</body>
+<script>
+	// 原型式继承
+	function Parent(){
+		this.name = "1507J";
+	}
+	var aa = new Parent();
+
+	function Child(obj){
+		function fn(){};
+		fn.prototype = obj;
+		return new fn();
+	}
+	var bb = Child(aa);
+
+	alert(bb.name);
+	alert(bb instanceof Parent);
+
+
+
+
+	// 特殊语法
+	function Parent(){
+		this.name = "1507J";
+	}
+	var aa = new Parent();
+
+	var o = Object.create(aa);
+	alert(o.name);
+
+	// 原型式继承
+	// 将子类的原型继承父类的实例
+	function parent(){
+		this.name = "1507J";
+		this.age = 18;
+	}
+	function child(){
+
+	}
+	child.prototype = new parent();
+	var aa = new child();
+	child.prototype.constructor = child;
+	var bb = new child();
+	console.log(child.prototype);
+	alert(child.prototype.constructor);
+	console.log(aa.constructor);
+	console.log(bb.constructor);
+	console.log(aa.name);
+	console.log(aa.age);
+</script>
+</html>

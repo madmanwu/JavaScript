@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	
+</body>
+<script>
+	var login=(function(){
+		var int;
+		function fun(){
+			return {
+				name:'1507J',
+				age:18,
+				sayname:function(){
+					alert('班级名称:'+this.name)
+				}
+			}
+		}
+		return {
+			check:function(){
+				if(!int){
+					int=fun();
+				}
+				return int;
+			}
+		}
+	})();
+	login.check().name='12345';
+	console.log(login.check().name);
+</script>
+</html>

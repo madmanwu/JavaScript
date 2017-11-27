@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		#box{
+			width: 500px;
+			height: 300px;
+			border: 1px solid #000;
+			overflow: hidden;
+		}
+	</style>
+</head>
+<body>
+	<button>加粗</button>
+	<button>倾斜</button>
+	<button>下划线</button>
+	<button>文字颜色</button>
+	<button>左对齐</button>
+	<button>居中对齐</button>
+	<button>右对齐</button>
+	<button id="btn">复制</button>
+	<div id="box">牡丹花下死做鬼也风流</div>
+</body>
+<script>
+	var box = document.getElementById("box");
+	document.onclick = function(e){
+		var e = e || window.event;
+		var target = e.target || e.srcElement;
+		switch(target.innerHTML){
+			case "加粗":box.style.fontWeight = "bold";
+			break;
+			case "倾斜":box.style.fontStyle = "italic";
+			break;
+			case "下划线":box.style.textDecoration = "underline";
+			break;
+			case "文字颜色":box.style.color = "green";
+			break;
+			case "左对齐":box.style.textAlign = "left";
+			break;
+			case "居中对齐":box.style.textAlign = "center";
+			break;
+			case "右对齐":box.style.textAlign = "right";
+			break;
+		}
+	}
+	
+	btn.onclick = function(){
+		var di = document.createElement("div");
+		di.innerHTML = "牡丹花下死做鬼也风流";
+		box.appendChild(di);
+		di.style.border = "none";
+	}
+</script>
+</html>

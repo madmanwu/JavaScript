@@ -1,0 +1,106 @@
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
+#wrap {
+  width: 100%;
+  height: 100%;
+  background: url(../img/bg.jpg) no-repeat;
+  background-size: cover;
+  background-position: center center;
+}
+#wrap .chuangliang {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+#wrap .chuangliang .left {
+  float: left;
+}
+#wrap .chuangliang .right {
+  float: right;
+}
+#wrap .main {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+#wrap .main .wutai {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  margin-left: -455px;
+}
+#wrap .main .tv_box {
+  position: absolute;
+  bottom: 50px;
+  left: 50%;
+  margin-left: -212px;
+  z-index:90;
+}
+#wrap .main .tv_box .btn_play {
+  width: 270px;
+  height: 100px;
+  border-radius: 100px;
+  position: absolute;
+  bottom: 39px;
+  right: 22px;
+  background: url(../img/btn_03.png) no-repeat 70px center;
+  display: block;
+}
+#wrap .main .tv_box .btn_stop {
+  width: 270px;
+  height: 100px;
+  border-radius: 100px;
+  position: absolute;
+  bottom: 39px;
+  right: 22px;
+  background: url(../img/btn_05.png) no-repeat 70px center;
+  display: none;
+}
+#wrap .main .tv_box .wen {
+  color: #fff;
+  font-family: "娃娃体-简";
+  font-size: 40px;
+  position: absolute;
+  bottom: 130px;
+  left: 80px;
+  width: 180px;
+  height: 135px;
+  line-height: 135px;
+  text-align: center;
+}
+#wrap .main .houzi {
+  position: absolute;
+  bottom: 330px;
+  left: 50%;
+  margin-left: -139px;
+}
+#drawnBox{
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.5);
+  position:absolute;
+  top:0;
+  left:0;
+  display:none;
+  z-index: 100;
+}
+#drawnBox>div>img{
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  margin-left: 40%;
+  margin-top: 40%;
+}
+#drawnBox>h3{
+  font-size: 40px;
+  margin-left: 37%;
+}
+
+

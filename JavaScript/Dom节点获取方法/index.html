@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<div id="wrap" style="width:100px;height:20px;">
+		<span></span>
+		<span class="yihang"></span>
+		<span class="yihang"></span>
+	</div>
+	<div class="wrap1">
+		<a href="#"></a>
+		<a href="#" name="a_n"></a>
+		<a href="#" name="text"></a>
+		<img src="moon.png" alt="">
+	</div>
+	<form action="" class="wrap1" id="form1">
+		<input type="text" name="text">
+		<input type="text" name="text">
+	</form>
+</body>
+<script>
+	var aa=12;
+--aa;
+console.log(aa);
+for(var i=divn.length-1;i>0;i--){
+	console.log(divn[i]);
+}
+//查找元素
+	var box=document.getElementById('wrap');
+	var box_span=box.getElementsByTagName('span');
+	console.log(box_span.length);
+	var box1=document.getElementsByClassName('wrap1');
+	console.log(box1.length);
+	var inputs=document.getElementsByName('text');//获取input元素
+	console.log(inputs.length);
+	var forms=document.forms['form1'];//获取form表单 ==getElementsByTagName('form')
+	console.log(forms.length);
+	var form_in=forms.elements;//获取form表单下的表单元素
+	console.log(form_in.length);
+	var _a=document.links;//所有带href属性的a标签
+	console.log(_a.length);
+	var _a_n=document.anchors;//所有带name属性的a标签
+	console.log(_a_n.length);
+	var imgs=document.images;//所有图片元素 ===getElementsByTagName('img')
+	console.log(imgs.length);
+
+/*节点操作*/
+		//创建节点
+		var text_n=document.createTextNode('yihang');//文本节点
+		var node_n=document.createElement('div');//创建span标签
+		var node_n1=document.createElement('p');
+		//插入节点－首先去要插入节点的父节点
+		box.appendChild(node_n1);//在父元素最后插入节点
+		box.insertBefore(text_n,box_span[0]);//(新节点，要插入的节点)
+		box.removeChild(box_span[1]);//(要删除的节点)
+		box.replaceChild(node_n,box_span[0]);//(新节点，要替换的节点)
+		//克隆节点
+		var box2=box.cloneNode();//true复制子结构 （false || 空 不复制子结构）
+		console.log(box2);
+
+
+    //标准属性
+      //src href id class name title type action target value
+      //src='设置值'
+      var box_id=box.getAttribute('id');
+      console.log(box_id);
+      box.setAttribute('class','yihang');
+    /*获取样式
+    	var css_style=test1.style.cssText;
+    	var css_s=getComputedStyle(test1,null);
+    	var css_style1=box.currentStyle;
+    	//console.log(css_style);
+    	//console.log(css_s);
+    	//console.log(css_style1);*/
+
+
+function byClassName(obj,classN) {
+	var _tag=obj.getElementsByTagName('*');
+	var tagarr=[];
+	for(var i=0;i<_tag.length;i++){
+		if(_tag[i].className==classN){
+			tagarr.push(_tag[i]);
+		}
+	}
+	return tagarr;
+}
+var aa=byClassName(box,'yihang');
+console.log(aa.length);
+</script>
+</html>

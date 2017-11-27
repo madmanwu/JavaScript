@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		*{list-style: none;margin:0;padding:0;}
+		#cont {width:294px;overflow: hidden;}
+		#cont li{width:40px;height:40px;float: left;line-height:40px;text-align:center;margin:0 2px 2px 0;color:#fff;}
+		#cont ul li{background:red;}
+		#cont ol li{background:#ccc;}
+		#cont ol li:hover{
+			background: #666;
+		}
+		#cont ol li.active{
+			background: skyblue;
+		}
+		#cont ol li.disable{
+			background: #ececec;
+		}
+		#cont ol li.cla{
+			background: pink;
+		}
+		#an{
+			width: 200px;
+			height: 40px;
+			overflow: hidden;
+		}
+		#btn{
+			width: 61px;
+			height: 39px;
+			border:none;
+			outline: none;
+			margin-left: 2px;
+		}
+		#but{
+			width: 61px;
+			height: 39px;
+			float: left;
+			border:none;
+			outline: none;
+		}
+	</style>
+</head>
+<body>
+	<div id="wrap">
+		<p>选择日期: <input type="text" id="text"></p>
+		<div id="cont" style="display:none">
+			<div id="title">
+				<span id="prevY">&lt;&lt;</span>
+				<span id="prevM">&lt;</span>
+				<span id="month">5月</span>
+				<span id="year">2017年</span>
+				<span id="nextM">&gt;</span>
+				<span id="nextY">&gt;&gt;</span>
+			</div>
+			<div id="dateCont">
+				<ul>
+					<li>日</li>
+					<li>一</li>
+					<li>二</li>
+					<li>三</li>
+					<li>四</li>
+					<li>五</li>
+					<li>六</li>
+				</ul>
+				<ol id="date">
+				</ol>
+			</div> 
+			<div id="an">
+				<button id="btn">清空</button>
+				<button id="but">当前时间</button>
+			</div>
+		</div>
+	</div>
+</body>
+<script>
+	var text=document.getElementById('text');
+	var cont=document.getElementById('cont');
+	text.onfocus=function(){
+		cont.style.display='block';
+	}
+	function setDate(){
+		this.ol=document.getElementById('date');
+		this.m=document.getElementById('month');
+		this.y=document.getElementById('year');
+		this.prevM=document.getElementById('prevM');
+		this.nextM=document.getElementById('nextM');
+		this.prevY=document.getElementById('prevY');
+		this.nextY=document.getElementById('nextY');
+		this.init(new Date());
+		this.bindChlick();
+	}
+	setDate.prototype={
+		init:function(data){
+			this.ol.innerHTML='';
+			//当前年
+			var y=data.getFullYear();
+			//当前月 0-11
+			var m=data.getMonth();
+			//今天几号
+			var d=data.getDate();
+			this.y.innerHTML=y+'年';
+			this.m.innerHTML=m+1+'月';
+			//当前月份一号是周几
+			var week=new Date(y,m,1).getDay();
+			var mday=[31,28,31,30,31,30,31,31,30,31,30,31];
+			//判断闰年
+			if((y%100!=0 || y%400==0) && y%4==0){
+				mday[1]=29;
+			}
+			//当前月有多少天
+			var M=mday[m];
+			//console.log(mday);
+			for(var i=1;i<42;i++){
+				var ndata = new Date(y,m,i-week);
+				var li = document.createElement("li");
+				if(i-week<1 || i-week>M){
+					li.classList.add("disable");
+				}else if(i-week == d){
+					li.classList.add("active");
+				}
+				var y1 = ndata.getFullYear();
+				var m1 = ndata.getMonth()+1;
+				var d1 = ndata.getDate();
+				m1=m1<10?"0"+m1:m1;
+				d1=d1<10?"0"+d1:d1;
+				li.setAttribute("newDate",y1+"-"+m1+"-"+d1);
+				li.innerHTML = ndata.getDate();
+				this.ol.appendChild(li);
+			}
+		},
+		bindChlick:function(){
+			var that=this;
+			this.prevM.onclick=function(){
+				//this
+				//当前年和当前月
+				that.setM(this.id)
+			}
+			this.nextM.onclick=function(){
+				that.setM(this.id)
+			}
+			this.prevY.onclick=function(){
+				//this
+				//当前年和当前月
+				that.setM(this.id)
+			}
+			this.nextY.onclick=function(){
+				that.setM(this.id)
+			}
+			//所有li绑定事件
+			this.ol.onclick=function(e){
+				var e = window.event || e;
+				var src=e.target || e.srcElement;
+				if(src.nodeName=='LI'){
+					text.value=src.getAttribute("newDate");
+					/*var nd=parseInt(src.innerHTML);
+					nd=nd<10?'0'+nd:nd;
+					var dy=parseInt(that.y.innerHTML);
+					var dm=parseInt(that.m.innerHTML);
+					dm=dm<10?'0'+dm:dm;
+					text.value=dy+'-'+dm+'-'+nd;*/
+					lis = document.getElementsByTagName("li");
+					for(var i=0;i<lis.length;i++){
+						lis[i].classList.remove("cla");
+					}
+					src.classList.add("cla");
+					cont.style.display = "none";
+				}
+			}
+			btn.onclick = function(){
+				text.value="";
+				that.init(new Date());
+			}
+			but.onclick = function(){
+				var data = new Date();
+				that.init(data);
+				var y = data.getFullYear();
+				var m = data.getMonth()+1;
+				var d = data.getDate();
+				m=m<10?"0"+m:m;
+				d=d<10?"0"+d:d;
+				text.value = y + "-" + m + "-" + d;
+
+			}
+		},
+		setM:function(str){
+			var dy=parseInt(this.y.innerHTML);
+			var dm=parseInt(this.m.innerHTML)-1;
+			var today=null;
+			switch(str){
+				case 'prevM':
+				today=new Date(dy,--dm);
+				break;
+				case 'nextM':
+				today=new Date(dy,++dm);
+				break;
+				case 'prevY':
+				today=new Date(--dy,dm);
+				break;
+				case 'nextY':
+				today=new Date(++dy,dm);
+				break;
+			}
+			this.init(today);
+		}
+	}
+	new setDate();
+</script>
+</html>

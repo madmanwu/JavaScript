@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<link rel="stylesheet" href="css/reset.css" />
+		<link rel="stylesheet" href="css/style.css" />
+		<script type="text/javascript" src="js/jquery-1.11.3.min.js" ></script>
+	</head>
+	<body>
+		<div id="wrap">
+			<div class="chuangliang">
+				<img src="img/chuanglian_01.png" class="left" />
+				<img src="img/chuanglian_03.png"  class="right"  />
+			</div>
+			<div class="main">
+				<img src="img/houzi_03.png" class="houzi"  />
+				<div class="tv_box">
+					<img src="img/tv_03.png" />
+					<div class="wen">中奖姓名</div>
+					<a href="javascript:;" class="btn_play"></a>
+					<a href="javascript:;" class="btn_stop"></a>
+				</div>
+				<img src="img/tai_03.png"  class="wutai" />
+			</div>
+		</div>
+
+		<!--中奖弹框，自己写样式,写主题内容-->
+		<div id="drawnBox"></div>
+		<script>
+			var data=[{"name":"张坤","src":"img/houzi_03.png"},{"name":"李民格","src":"img/houzi_03.png"},{"name":"史留闯","src":"img/houzi_03.png"},
+			{"name":"吴蔓","src":"img/houzi_03.png"},
+			{"name":"查琪","src":"img/houzi_03.png"},
+			{"name":"陈浩","src":"img/houzi_03.png"},
+			{"name":"靳耀玉","src":"img/houzi_03.png"}]
+
+			function cj(){
+				//开始按钮
+				this.beginbtn=document.getElementsByClassName('btn_play')[0];
+				//结束按钮
+				this.stopbtn=document.getElementsByClassName('btn_stop')[0];
+				//中奖姓名
+				this.wen=document.getElementsByClassName('wen')[0];
+				//弹窗
+				this.drawnBox=document.getElementById('drawnBox');
+				//随机数
+				this.num=null;
+				this.bindEvent();
+				this.count=3;
+
+			}
+			cj.prototype={
+				bindEvent:function(){
+					//点击抽奖按钮
+					//var flag=false;
+					var that=this;
+					this.timer=null;
+					//开始抽奖
+					this.beginbtn.onclick=function(){
+						that.count--;
+						if(that.count>=0){
+							var arrlen=data.length-1;
+							//alert(arrlen);
+							that.timer=setInterval(function(){
+								//生成随机数
+								that.num=that.setNum(0,arrlen);
+								that.wen.innerHTML=data[that.num].name;
+							},80)
+							this.style.display='none';
+							that.stopbtn.style.display='block';
+						}else{
+							alert('今天抽奖结束！')
+						}
+						
+					}
+					//暂停按钮
+					this.stopbtn.onclick=function(){
+					
+						this.style.display='none';
+						that.beginbtn.style.display='block';
+						clearInterval(that.timer);
+						var box=document.createElement('div');
+						box.innerHTML='<img src="'+data[that.num].src+'" alt="" />';
+						var h2=document.createElement('h2');
+						h2.innerHTML='恭喜:'+data[that.num].name;
+						that.drawnBox.appendChild(box);
+						that.drawnBox.appendChild(h2);
+						data.splice(that.num,1)
+						that.drawnBox.style.display='block';
+						//console.log(data);
+						//3秒消失
+						setTimeout(function(){
+							that.drawnBox.style.display='none';
+							that.drawnBox.innerHTML='';
+							that.wen.innerHTML='中奖姓名';
+						},1000)
+					
+					}
+				},
+				setNum:function(min,max){
+					return Math.floor(Math.random()*(max-min+1)+min);
+				}
+			}
+			new cj();
+		</script>
+	</body>
+</html>

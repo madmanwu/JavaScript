@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+	*{margin:0;padding:0;list-style: none;}
+	.bigbox{width:600px;height:300px;border:1px solid #ccc;margin:50px auto;position:relative;}
+	.bigbox .ul{width:600px;height:50px;border-bottom:1px solid #ccc;position:relative;}
+	.bigbox .ul li{width:199px;height:50px;float:left;background:#fff;text-align: center;line-height: 50px;}
+	.bigbox .ul li .div{width:600px;height:150px;background:#ccc;border:1px solid #ccc;position:absolute;left:0;top:50px;display:none;z-index: 1}
+	.bigbox .ul .lis{border-right:1px solid #ccc;}
+	.bigbox .nei{width:600px;height:250px;position:absolute;top:50px;left:0;}
+	</style>
+</head>
+<body>
+	<div class='bigbox'>
+		<ul class='ul'>
+			<li class='lis' id="erdaimu">
+				<p>垂耳兔</p>
+				<div class='div'>
+				</div>
+			</li>
+			<li class='lis' id="pansite">
+				<p>黄豆包</p>
+				<div class='div'>
+				</div>
+			</li>
+			<li id="smiley">
+				<p>黄豆包2</p>
+				<div class='div'>
+				</div>
+			</li>
+		</ul>
+		<div class='nei' contenteditable="true"></div>
+	</div>
+<input type="color" name="" id="cbtn">色板
+<script src='data.js'></script>
+<script>
+	
+	var timer=null;
+	//lis
+	var lis=document.getElementsByTagName('li');
+	console.log(lis);
+	//表情框
+	var divs=document.getElementsByClassName('div');
+	for(var y in face){
+		for(var u=0;u<face[y].length;u++){
+			var box=document.getElementById(y);
+			var box1=box.getElementsByTagName('div')[0];
+			var imgs=document.createElement('img');
+			imgs.src='face/'+y+'/'+face[y][u];
+			box1.appendChild(imgs)
+		}
+	}
+
+	for(var i=0;i<lis.length;i++){
+		lis[i].index=i;
+		lis[i].onmouseover=function(){
+			for(var j=0;j<lis.length;j++){
+				lis[j].style.background='';
+				divs[j].style.display='none';
+				if(j==this.index){
+					this.style.background='#ccc'
+					divs[this.index].style.display='block'
+				}
+			}
+			clearTimeout(timer);
+		}
+		lis[i].onmouseout=function(){
+			timer=setTimeout(function(){
+				for(var j=0;j<lis.length;j++){
+					lis[j].style.background='';
+					divs[j].style.display='none';
+				}
+			},1000)
+		}
+		divs[i].index=i;
+		divs[i].onmouseover=function(){
+			clearTimeout(timer);
+			for(var j=0;j<divs.length;j++){
+				divs[j].style.display='none';
+				if(this.index==j){
+					divs[this.index].style.display='block';
+				}
+			}
+		}
+		divs[i].onmouseout=function(){
+			for(var j=0;j<divs.length;j++){
+				divs[j].style.display='none';
+			}
+		}
+	}
+</script>
+	
+</body>
+</html>

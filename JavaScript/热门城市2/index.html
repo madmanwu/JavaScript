@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		*{list-style:none;padding:0;margin:0;}
+		input[type="text"]{width:200px;height:40px;line-height:40px;}
+		#top ul li,#bottom ul li{display:inline-block;padding:5px;position:relative;}
+		#bottom ul li ol{width:100px;height:auto;background:skyblue;position:absolute;display:none;z-index:10;}
+		#wrap{border:1px solid #000;}
+	</style>
+</head>
+<script type="text/javascript" src="data.js"></script>
+<body>
+	<input type="text">
+	<div id="wrap">
+		<div id="top">
+			<p>热门城市</p>
+		</div>
+		<div id="bottom">
+			<p>选择省份</p>
+		</div>
+	</div>
+	<script>
+		
+		function city(){
+			//top
+			this.top=document.getElementById('top');
+			//bottom
+			this.bottom=document.getElementById('bottom');
+			this.init();
+			this.text=document.getElementsByTagName('input')[0];
+		}
+		city.prototype.init=function(){
+			this.showCity();
+			this.showol();
+		}
+		city.prototype.showCity=function(){
+			var that=this;
+			//渲染热门城市
+			var hotul=document.createElement('ul');
+			var pul=document.createElement('ul');
+			for(var key in cityData){
+				if(key=='hot'){
+					var arr=cityData['hot'];
+					for(var i=0;i<arr.length;i++){
+						var li=document.createElement('li');
+						li.innerHTML=arr[i].name;
+						li.onclick=function(){
+							that.text.value=this.innerText;
+						}
+						hotul.appendChild(li);
+					}
+				}else{
+					var arr1=cityData['province'];
+					for(var j=0;j<arr1.length;j++){
+						var li1=document.createElement('li');
+						li1.innerHTML=arr1[j].name;
+						pul.appendChild(li1);
+						var ol=document.createElement('ol');
+						for(var k=0;k<arr1[j].city.length;k++){
+							var olli=document.createElement('li');
+							olli.innerHTML=arr1[j].city[k].name;
+							ol.appendChild(olli);
+						}
+						li1.appendChild(ol);
+					}
+				}
+			}
+			this.top.appendChild(hotul);
+			this.bottom.appendChild(pul);
+		}
+		city.prototype.showol=function(){
+			var that=this;
+			this.bottom.onclick=function(e){
+				var e = e || window.event;
+				var src= e.target || e.srcElement;
+				if(src.nodeName=='LI'){
+					var allol=this.getElementsByTagName('ol');
+					for(var n=0;n<allol.length;n++){
+						allol[n].style.display='none';
+					}
+					var ol=src.getElementsByTagName('ol')[0];
+					ol.style.display='block';
+					ol.onclick=function(e){
+						e.stopPropagation();
+						var e = e || window.event;
+						var src= e.target || e.srcElement;
+						if(src.nodeName=='LI'){
+							that.text.value=src.innerText;
+							ol.style.display='none';
+						}
+					}
+				}
+			}
+		}
+		new city();
+	</script>
+</body>
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		*{ margin:0; padding:0; list-style:none;}
+
+		.tabs{ margin:10px;}
+
+		.tabs-nav:before, .tabs-nav:after{ display:table; content:' ';}
+		.tabs-nav:after{ width:100%; clear:both; border-bottom:1px solid #47a3da;}
+		.tabs-nav li{ position:relative; float:left; margin-right:5px; border:1px solid #becbd2; border-bottom:none;}
+		.tabs-nav li.active:after{ position:absolute; bottom:-1px; width:100%; display:block; content:' '; border-bottom:1px solid #fff;}
+		.tabs-nav a{ display:block; padding:0 20px; line-height:30px; text-decoration:none; color:#000; font-size:14px;}
+
+		.tabs-cnt{ padding:10px;}
+		.tabs-content{ display:none;}
+		.tabs-content:first-child{ display:block;}
+	</style>
+</head>
+<body>
+	<div class="tabs" id="tabs1">
+        <ul class="tabs-nav tabs-nav1">
+            <li class="active"><a href="javascript:;">折扣</a></li>
+            <li><a href="javascript:;">活动</a></li>
+            <li><a href="javascript:;">优惠</a></li>
+            <li><a href="javascript:;">其他</a></li>
+        </ul>
+        <div class="tabs-cnt tabs-cnt1">
+            <div class="tabs-content">
+                11111111
+            </div>
+            <div class="tabs-content">
+                2222
+            </div>
+            <div class="tabs-content">
+                3333
+            </div>
+            <div class="tabs-content">
+                4444
+            </div>
+        </div>        
+    </div>
+		<div class="tabs" id="tabs2">
+	        <ul class="tabs-nav tabs-nav2">
+	            <li class="active"><a href="javascript:;">折扣</a></li>
+	            <li><a href="javascript:;">活动</a></li>
+	            <li><a href="javascript:;">优惠</a></li>
+	            <li><a href="javascript:;">其他</a></li>
+	        </ul>
+	        <div class="tabs-cnt tabs-cnt2">
+	            <div class="tabs-content">
+	                11111111
+	            </div>
+	            <div class="tabs-content">
+	                2222
+	            </div>
+	            <div class="tabs-content">
+	                3333
+	            </div>
+	            <div class="tabs-content">
+	                4444
+	            </div>
+	        </div>        
+	    </div>
+	<script>
+		//table
+		function table(title,titNode,cont,contNode){
+			//aa
+			//ul
+			this.title=document.querySelector(title);
+			//li
+			this.titNode=this.title.querySelectorAll(titNode);
+			//内容div
+			this.cont=document.querySelector(cont);
+			//内容小div
+			this.contNode=this.cont.querySelectorAll(contNode);
+			//
+			this.showDiv();
+		}
+		table.prototype.showDiv=function(){
+			var that=this;
+			//li
+			for(var i=0;i<this.titNode.length;i++){
+				this.titNode[i].onclick=(function(m){
+					return function(){
+						for(var a=0;a<that.contNode.length;a++){
+							that.contNode[a].style.display='none';
+							that.titNode[a].className='';
+						}
+						//this=li--->contNode没有
+						that.contNode[m].style.display='block';
+						that.titNode[m].className='active';
+					}
+				})(i)
+			}
+			
+		}
+		new table('.tabs-nav1','li','.tabs-cnt1','div');
+		new table('.tabs-nav2','li','.tabs-cnt2','div');
+	</script>
+</body>
+</html>

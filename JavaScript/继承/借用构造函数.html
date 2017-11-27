@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+		//借用构造函数
+		//只借用构造函数内部的属性和方法(不会继承原型的方法和属性)
+		function per1(name,age){
+			this.name=name;
+			this.age=age;
+			/*this.sayname=function(){
+				alert(this.name)
+			}*/
+		}
+		per1.prototype={
+			sayname:function(){
+				alert(this.name)
+			},
+			aa:'123'
+		}
+		function per2(name,age){
+			//借用了per1
+			//console.log(this);
+			per1.call(this,name,age)
+			//per1.apply(this,arguments);
+		}
+		var a=new per1('1507J',18);
+		//per2.prototype=new per1();
+		var b=new per2('1507F',20);
+		b.sayname();
+		a.sayname();
+		/*alert(a.name);
+		alert(a.age)*/
+	</script>
+</body>
+</html>

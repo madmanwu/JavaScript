@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		*{padding:0;margin:0;list-style:none;}
+		#wrap{width:300px;height:300px;position:relative;}
+		#wrap ul,#wrap ul li{width:300px;height:300px;overflow:hidden;}
+		#wrap ul li{display:none;}
+		#wrap ul li.show{display:block;opacity:0;}
+		#wrap p{float:left;width:90px;height:90px;padding:5px;position:relative;cursor:pointer;}
+		#wrap p img{width:100%;height:100%;}
+		#btn{width:90px;height:90px;background:skyblue;text-align:center;line-height:90px;position:absolute;bottom:5px;right:5px;color:#fff;cursor:pointer;font-size:20px;font-family: '微软雅黑';}
+		#wrap p span{height:20px;background:rgba(0,0,0,.6);font-size:12px;color:#fff;display:none;bottom:5px;left:5px;position:absolute;right:5px;
+			text-align:center;line-height:20px;}
+		#wrap p:hover span{display:block;}
+	</style>
+</head>
+<body>
+	<!-- <div id="wrap">
+		<ul id="cont">
+			<li class="show">
+				<p><img src="img1.jpg" alt=""><span>图片一</span></p>
+				<p><img src="img2.jpg" alt=""><span>图片一</span></p>
+				<p><img src="img3.jpg" alt=""><span>图片一</span></p>
+				<p><img src="img4.jpg" alt=""><span>图片一</span></p>
+				<p><img src="img5.jpg" alt=""><span>图片一</span></p>
+				<p><img src="img6.jpg" alt=""><span>图片一</span></p>
+				<p><img src="img7.jpg" alt=""><span>图片一</span></p>
+				<p><img src="img6.jpg" alt=""><span>图片一</span></p>
+			</li>
+			<li></li>
+			<li></li>
+		</ul>
+		<div id="btn">换一换</div>
+	</div> -->
+
+	<div id="wrap">
+		<ul id="cont"></ul>
+		<div id="btn">换一换</div>
+	</div>
+</body>
+<script src="data.js"></script>
+<script src="move.js"></script>
+<script>
+	function Fn(){
+		this.cont = document.getElementById("cont");
+		this.btn = document.getElementById("btn");
+		this.sb();
+	}
+	Fn.prototype.sb=function(){
+		for(var i=0;i<data.length;i++){
+			this.newli = document.createElement("li");
+			for(var a=0;a<data[i].img.length;a++){
+				this.p = document.createElement("p");
+				this.img = document.createElement("img");
+				this.img.src = data[i].img[a];
+				this.newli.appendChild(this.p);
+				this.p.appendChild(this.img);
+				this.cont.appendChild(this.newli);
+				this.span = document.createElement("span");
+				this.span.innerHTML = data[i].info[a];
+				this.p.appendChild(this.span);
+			}
+			this.cont.appendChild(this.newli);
+		}
+		this.cont.firstChild.className = "show";
+		this.cont.firstChild.style.opacity = "1";
+		this.lis = document.getElementsByTagName("li");
+		this.count = 0;
+		var that = this;
+		this.btn.onclick = function(){
+			that.count++;
+			if(that.count >= that.lis.length){
+				count = 0;
+			}
+			for(var k=0;k<that.lis.length;k++){
+				that.lis[k].className = "";
+				startMove(that.lis[k],{opacity:0})
+			}
+			that.lis[that.count].className = "show";
+			startMove(that.lis[that.count],{opacity:100});
+		}
+	}
+	new Fn();
+</script>
+</html>

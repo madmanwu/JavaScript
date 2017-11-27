@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<div id="div"></div>
+	<script>
+	//组合继承（原型继承+借用构造函数）
+	//优化原型继承的缺点（共享）
+	//优化借用构造函数 (可以继承原型上的方法和属性)
+		function per1(){
+			this.name='1507F';
+			this.fried=['1507J','1507D','1507E'];
+		}
+		per1.prototype.sayname=function(){
+			alert(this.name);
+		}
+		function per2(){
+			per1.call(this);
+		}
+		per2.prototype=new per1();
+		var aa=new per2();
+		var bb=new per2();
+		aa.sayname();
+		//如果属性值为引用类型，
+		aa.fried.push('1508F');
+		alert(aa.fried);
+		alert(bb.fried);
+
+		
+	</script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+		var city = ["河北省","河南省","山西省","北京市"];
+		var cites = [["石家庄","承德","沧州","邯郸","衡水"],["郑州","总部","周口","洛阳"],["太原","吕梁","临汾"],["昌平","朝阳","通州","大兴","海淀区"]];
+
+		var sel1 = document.createElement("select")
+		,	sel2 = document.createElement("select");
+		document.body.appendChild(sel1);
+		document.body.appendChild(sel2);
+
+		for(var i=0;i<city.length;i++){
+			var option = document.createElement("option");
+			option.innerHTML = city[i];
+			option.value = i;
+			sel1.appendChild(option);
+		}
+		for(var i=0;i<cites[0].length;i++){
+			var option = document.createElement("option");
+			option.innerHTML = cites[0][i];
+			sel2.appendChild(option);
+		}
+		sel1.onchange = function(){
+			var opts = sel2.getElementsByTagName("option");
+			for(var i=opts.length-1;i>=0;i--){
+				opts[i].parentNode.removeChild(opts[i]);
+			}
+			for(var i=0;i<cites[this.value].length;i++){
+				var option = document.createElement("option");
+				option.innerHTML = cites[this.value][i];
+				sel2.appendChild(option);
+			}
+		}
+	</script>
+</body>
+</html>

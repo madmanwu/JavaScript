@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+		var str='{"name":"1507J","age":20,"erea":"海淀区"}';
+
+		console.log(JSON.parse(str,function(key,value){
+			if(key=='name'){
+				return 123
+			}
+			return value;
+		}));
+	</script>
+</body>
+</html>

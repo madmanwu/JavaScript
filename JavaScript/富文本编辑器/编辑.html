@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		
+	</style>
+</head>
+<body>
+  <select id="city"></select>
+  <select id="erea"></select>
+  <script>
+  	var data=[
+  		{'city':['北京','上海','天津']},
+  		{'erea':[['海淀','朝阳','昌平'],['浦东','浦西','浦南'],['和平区','西青区','南开区']]}
+  	];
+  	//渲染数据
+  	var city=document.getElementById('city');
+  	
+  /*	function Option(val){
+  		return document.createElement('option').innerHTML=val;
+  	}
+  	new Option()*/
+  	for(var j=0;j<data[0].city.length;j++){
+  		//new Option 直接创建Option
+  		var o=new Option(data[0].city[j]);
+  		city.appendChild(o);
+  	}
+  	//改成城市下拉框
+  	city.onchange=function(){
+  		var ind=this.selectedIndex;
+  		//默认清空 options 返回一个数组 当前下拉框下所有option元素 
+  		erea.options.length=0;
+  		console.log(data[1].erea[ind]);
+  		console.log(ind);
+  		for(var i=0;i<data[1].erea[ind].length;i++){
+  			var o1=new Option(data[1].erea[ind][i]);
+  			erea.appendChild(o1);
+  		}
+  		//var ereaData=ind
+  	}
+  	
+  </script>
+</body>
+</html>

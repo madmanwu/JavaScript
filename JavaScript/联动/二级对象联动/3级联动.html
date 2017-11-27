@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<select id="area"></select>
+	<select id="address"></select>
+	<script type="text/javascript" src="data.js"></script>
+	<script>
+		//console.log(datasrc.localArea);
+		for(var i in datasrc.localArea){
+			// console.log(datasrc.localArea[i]);
+			var ops=new Option(datasrc.localArea[i].name)
+			ops.setAttribute('dataId',datasrc.localArea[i].id)
+			area.appendChild(ops);
+		}
+
+		area.onchange=function(){
+			var ind=this.selectedIndex;
+			var ops=datasrc.localArea[ind].option;
+			address.options.length=0;
+			for(var j=0;j<ops.length;j++){
+				var ops1=new Option(ops[j].name)
+				console.log(ops1)
+				address.appendChild(ops1);
+				ops1.setAttribute('dataId',ops[j].id);
+				ops1.setAttribute('dataPid',ops[j].pid);
+				console.log(ops[j]);
+			}
+
+		}
+		area.onchange();
+	</script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+
+		var url='www.baidu.com?city=北京&erea=海淀&school=八维';
+
+		var reg=/\?(.+)/;
+
+		var str=reg.exec(url)[1];
+        var stt=str.split("&"); 
+        var jjj={};
+        for(var i=0;i<stt.length;i++){
+             var strr=stt[i].split("=");
+             jjj[strr[0]]=strr[1];
+        }
+        
+console.log(jjj);
+	</script>
+</body>
+</html>

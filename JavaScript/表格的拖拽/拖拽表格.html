@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		*{padding:0;margin:0;-webkit-user-select:none;}
+		table{margin:20px auto;border:1px solid #000;border-collapse:collapse;}
+		td{border:1px solid #000;padding:10px;}
+	</style>
+</head>
+<body>
+	<table id="table">
+		<tr>
+			<td>00000</td>
+			<td>11111</td>
+			<td>22222</td>
+			<td>33333</td>
+		</tr>
+		<tr>
+			<td>111111</td>
+			<td>222222</td>
+			<td>333333</td>
+			<td>444444</td>
+		</tr>
+		<tr>
+			<td>11111111</td>
+			<td>22222222</td>
+			<td>333333333</td>
+			<td>444444444</td>
+		</tr>
+	</table>
+</body>
+<script>
+	var table=document.getElementById('table');
+	//第一行
+	var firstTR=table.rows[0];
+	var firstTd=firstTR.cells;
+	var flag=false;
+	var starObj=null;
+	var start,end;
+	for(var n=0;n<table.rows.length;n++){
+		var td=document.createElement('td');
+		td.innerHTML='12123';
+		td.style.display='none';
+		table.rows[n].appendChild(td);
+	}
+	for(var i=0;i<firstTd.length;i++){
+		firstTd[i].setAttribute('index',i);
+		firstTd[i].onmousedown=function(){
+			starObj=this;
+			flag=true;
+			//console.log(ind)
+		}
+
+		document.onmousemove=function(e){
+			var e = window.event || e;
+			var src= e.target || e.srcElement;
+			end=parseInt(src.getAttribute('index'));
+			if(starObj){
+				start=parseInt(starObj.getAttribute('index'));
+			}
+			if(flag){
+				if(start<end){
+					end=end+1
+				}
+				for(var j=0;j<table.rows.length;j++){
+					table.rows[j].insertBefore(table.rows[j].cells[start],table.rows[j].cells[end])
+				}
+				for(var k=0;k<firstTd.length;k++){
+					firstTd[k].setAttribute('index',k);
+				}
+				console.log('开始下标'+start+'--结束下标'+end);
+				//console.log();
+			}
+		}
+		document.onmouseup=function(){
+			flag=false;
+		}
+	}
+</script>
+</html>

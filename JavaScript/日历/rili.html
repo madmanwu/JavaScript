@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		*{padding:0;margin:0;color: #666666;font-size: 14px;font-family: "微软雅黑";list-style:none;}
+		.wrap{width:350px;margin:20px auto;}
+		.wrap p{}
+		.wrap p input{height: 40px;line-height: 40px;}
+
+		#contant{text-align:center;width:350px;border:1px solid #999;padding-bottom:10px;}
+		#title{height:50px;line-height:50px;}
+		#title>div{display:inline-block;padding:0 15px;cursor:pointer;}
+		#cont{width:316px;overflow: hidden;margin:0 auto;}
+		#cont ul li{background:#c90;}
+		#cont ul li,#cont ol li{width:40px;height:40px;text-align:center;line-height:40px;color:#fff;float: left;margin-right:5px;margin-bottom:5px;}
+		#cont ol li{cursor:pointer;background:#ccc;}
+		#cont ol li.on{background:skyblue;}
+		#cont ol li.show{background:red;}
+		#cont ol li:hover{background:#999;}
+		#foot>div{display:inline-block;padding:5px 8px;color:#fff;background:skyblue;cursor:pointer;border-radius:6px;}
+	</style>
+</head>
+<body>
+	<div class="wrap">
+		<p>选择日期: <input type="text" id="text"></p>
+		<div id="contant" style="display:none">
+			<div id="title">
+				<div id="prevyear">&lt;&lt;</div>
+				<div id="prevmonth">&lt;</div>
+				<div id="month"></div>
+				<div id="year"></div>
+				<div id="nextmonth">&gt;</div>
+				<div id="nextyear">&gt;&gt;</div>
+			</div>
+			<div id="cont">
+				<ul>
+					<li>日</li>
+					<li>一</li>
+					<li>二</li>
+					<li>三</li>
+					<li>四</li>
+					<li>五</li>
+					<li>六</li>
+				</ul>
+				<ol id="dateBox">
+					
+				</ol>
+			</div>
+			<div id="foot">
+				<div id="cur">当前时间</div>
+				<div id="clear">清空</div>
+			</div>
+		</div>
+	</div>
+</body>
+<script>
+;(function(){
+	var input=document.getElementById('text');
+	var contant=document.getElementById('contant');
+	input.onfocus=function(){
+		contant.style.display='block';
+	};
+	
+	function setdate(){
+
+		this.cont=document.getElementById('cont');
+
+		this.ol=this.cont.getElementsByTagName('ol')[0];
+
+		this.month=document.getElementById('month');
+
+		this.year=document.getElementById('year');
+
+		this.prevyear=document.getElementById('prevyear');
+
+		this.prevmonth=document.getElementById('prevmonth');
+
+		this.nextmonth=document.getElementById('nextmonth');
+
+		this.nextyear=document.getElementById('nextyear');
+
+		this.cur=document.getElementById('cur');
+
+		this.clear=document.getElementById('clear');
+
+		this.initDate(new Date());
+
+		this.bindClick();
+	}
+
+	setdate.prototype={
+		initDate:function(time){
+			this.ol.innerHTML='';
+			this.y=time.getFullYear();
+			this.m=time.getMonth();
+			this.d=time.getDate();
+			this.showDate(this.y,this.m,this.d);
+		},
+		bindClick:function(){
+			var that=this;
+			this.prevyear.onclick=function(){
+				that.setNewdate('上一年')
+			}
+			this.prevmonth.onclick=function(){
+				that.setNewdate('上一月')
+			}
+			this.nextmonth.onclick=function(){
+				that.setNewdate('下一月')
+			}
+			this.nextyear.onclick=function(){
+				that.setNewdate('下一年')
+			}
+			this.cur.onclick=function(){
+				that.initDate(new Date());
+			}
+			this.ol.onclick=function(e){
+				var lis=this.getElementsByTagName('li');
+				for(var i=0;i<lis.length;i++){
+					lis[i].classList.remove('show');
+				}
+				var e = window.event || e;
+				var src = e.target || e.srcElement;
+				if(src.nodeName=='LI'){
+					var dy=parseInt(that.year.innerHTML);
+					var dm=parseInt(that.month.innerHTML);
+					input.value=dy+'-'+dm+'-'+src.innerHTML;
+					src.classList.add('show');
+					contant.style.display='none';
+				}
+			}
+			this.clear.onclick=function(){
+				input.value='';
+				var lis=that.ol.getElementsByTagName('li');
+				for(var i=0;i<lis.length;i++){
+					lis[i].classList.remove('show');
+				}
+			}
+		},
+		setNewdate:function(str){
+			var dy=parseInt(this.year.innerHTML);
+			var dm=parseInt(this.month.innerHTML)-1;
+			var data=new Date();
+			switch(str){
+				case '上一年':
+				data.setFullYear(--dy);
+				data.setMonth(dm);
+				break;
+				case '上一月':
+				data.setFullYear(dy);
+				data.setMonth(--dm);
+				break;
+				case '下一年':
+				data.setFullYear(++dy);
+				data.setMonth(dm);
+				break;
+				case '下一月':
+				data.setFullYear(dy);
+				data.setMonth(++dm);
+				break;
+			}
+			
+			this.initDate(data);
+		},
+		showDate:function(y,m,d){
+			var year=y;
+			var month=m;
+			var date=d;
+			var adate=new Date(year,month,1);
+			var week=adate.getDay();
+			var day=[31,29,31,30,31,30,31,31,30,31,30,31];
+
+			if(year%4==0 && ( year%100!=0 || year%400==0 )){
+				day[1]=28;
+			}
+
+			var mDay=day[month];
+			
+			this.month.innerHTML=month+1+'月';
+			this.year.innerHTML=year+'年';
+
+			for(var i=1;i<=week;i++){
+				var li=document.createElement('li');
+				this.ol.appendChild(li);
+			}
+			for(var j=1;j<=mDay;j++){
+				var li1=document.createElement('li');
+				if(j==date){
+					li1.className='on';
+				}
+				li1.innerHTML=j;
+				this.ol.appendChild(li1);
+			}
+		}
+
+	}
+	
+	new setdate();
+
+})();
+</script>
+</html>

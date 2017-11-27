@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+		var sel1 = document.createElement("select")
+		,	sel2 = document.createElement("select");
+		document.body.appendChild(sel1);
+		document.body.appendChild(sel2);
+
+		var big = ["今天","明天","后天"];
+		var small = [["想你","爱你","念你"],["晴天","阴天","白天"],["黑天","月亮","星星"]];
+
+		for(var i=0;i<big.length;i++){
+			var option = document.createElement("option");
+			option.innerHTML = big[i];
+			option.value = i;
+			sel1.appendChild(option);
+		}
+		for(var i=0;i<big[0].length;i++){
+			var option = document.createElement("option");
+			option.innerHTML = small[0][i];
+			sel2.appendChild(option);
+		}
+		sel1.onchange = function(){
+			var opts = sel2.getElementsByTagName("option");
+			for(var i=opts.length-1;i>=0;i--){
+				opts[i].parentNode.removeChild(opts[i]);
+			}
+			for(var i=0;i<small[this.value].length;i++){
+				var option = document.createElement("option");
+				option.innerHTML = small[this.value][i];
+				sel2.appendChild(option);
+			}
+		}
+	</script>
+</body>
+</html>

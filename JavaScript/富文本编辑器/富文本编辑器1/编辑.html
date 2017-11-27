@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		
+	</style>
+</head>
+<body>
+  <select id="city"></select>
+  <select id="erea"></select>
+  <script>
+  	 var data=[["北京","海淀区","昌平区"],["上海","浦东区","浦西区"],["天津","南开区","塘沽区"]];
+
+  	 var city=document.getElementById('city');
+  	 var erea=document.getElementById('erea');
+  	 
+  	 for(var i=0;i<data.length;i++){
+  	 	console.log(data[i][0]);
+  	 	var ops=new Option(data[i][0]);
+  	 	city.appendChild(ops);
+  	 }
+
+  	 city.onchange=function(){
+  	 	var ind=this.selectedIndex;
+  	 	erea.innerHTML='';
+  	 	for(var j=1;j<data[ind].length;j++){
+  	 		var op1=new Option(data[ind][j]);
+  	 		erea.appendChild(op1);
+  	 		console.log(data[ind][j]);
+  	 	}
+  	 }
+  	 city.onchange();
+  </script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<select name="" id="one"></select>
+	<select name="" id="two"></select>
+</body>
+<script src="data.js"></script>
+<script>
+	var one = document.getElementById("one");
+	var two = document.getElementById("two");
+
+	for(var i in datasrc.ObjectType.option){
+		// console.log(datasrc.ObjectType.option[i])
+		var ops=new Option(datasrc.ObjectType.option[i].text);
+		ops.setAttribute('dataId',datasrc.ObjectType.option[i].value)
+		one.appendChild(ops);
+	}
+	one.onchange=function(){
+		var ind=this.selectedIndex;
+		var ops=datasrc.ObjectType.option[ind].option;
+		console.log(ops)
+		two.options.length=0;
+		for(var j=0;j<ops.length;j++){
+			var ops1=new Option(ops[j].text)
+			two.appendChild(ops1);
+			ops1.setAttribute('value',ops[j].value);
+			console.log(ops[j]);
+		}
+	}
+	one.onchange();
+</script>
+</html>

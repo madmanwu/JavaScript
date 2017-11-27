@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		*{
+			margin: 0 auto;
+			padding: 0;
+			list-style: none;
+		}
+		#box{
+			border: 1px solid #000;
+			width: 500px;
+			height: 300px;
+		}
+		#list{
+			width: 500px;
+			height: 30px;
+		}
+		#list>li{
+			width: 100px;
+			height: 30px;
+			float: left;
+			text-align: center;
+			line-height: 30px;
+		}
+		#list>li.active{
+			background: red;
+		}
+		#cont{
+			width: 500px;
+			height: 270px;
+			overflow: hidden;
+		}
+		#cont>div{
+			width: 500px;
+			height: 270px;
+			line-height: 270px;
+			text-align: center;
+			float: left;
+		}
+		#cont>div.active{
+			background: #CCC;
+		}
+	</style>
+</head>
+<body>
+	<div id="box">
+		<ul id="list">
+			<li class="active">1</li>
+			<li>2</li>
+			<li>3</li>
+			<li>4</li>
+			<li>5</li>
+		</ul>
+		<div id="cont">
+			<div class="active">111</div>
+			<div>222</div>
+			<div>333</div>
+			<div>444</div>
+			<div>555</div>
+		</div>
+	</div>
+</body>
+<script>
+	function Table(){
+		this.list = document.getElementById("list");
+		this.lis = this.list.getElementsByTagName("li");
+		this.cont = document.getElementById("cont");
+		this.dis = this.cont.getElementsByTagName("div");
+		this.fn();
+	}
+	Table.prototype.fn = function(){
+		var that = this;
+		for(var i=0;i<this.lis.length;i++){
+			this.lis[i].index = i;
+			this.lis[i].onclick = function(){
+				var inde = this.index;
+				that.change(inde);
+			}
+		}
+	}
+	Table.prototype.change = function(ind){
+		this.ind = ind;
+		for(var j=0;j<this.lis.length;j++){
+			this.lis[j].className = "";
+			this.dis[j].style.display = "none";
+		}
+		this.lis[ind].className = "active";
+		this.dis[ind].style.display = "block";
+	}
+	new Table("list","cont");
+</script>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<!-- 一、请单击A标签“提交按钮”，阻止页面跳转同时让表单提交。[如图:1](总分：100) 排版如下：  -->
+	<h3>请单击A标签“提交按钮”，阻止页面跳转同时让表单提交。</h3>
+	<form action="#" method="get" id="form">
+		<input type="text" name="site" value="网址" readonly/>
+		<a id="subbtn" href="www.baidu.com" onclick="alert('在此调用提交表单的方法')">提交按钮</a>
+	</form>
+</body>
+<script>
+	var btn=document.getElementById('subbtn');
+	var forms=document.forms[0];
+	btn.onclick=function(e){
+		var e = window.event || e;
+		if(e.preventDefault){
+			e.preventDefault();
+		}else{
+			e.returnValue=false;
+		}
+		forms.submit();
+	}
+</script>
+</html>

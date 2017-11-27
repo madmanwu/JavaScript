@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<form action="login.php" name="my">
+		user: <input type="text" name="user" disabled="true">
+		password: <input type="password" name="password">
+		<input type="radio" name="sex" value="女">女
+		<input type="radio" name="sex" value="男">男
+		<input type="submit" value="提交" name="sub">
+	</form>
+</body>
+<script>
+	var forms=document.forms['my'];
+	function selectForm(forms){
+		var ele=forms.elements;
+		var arr=[];
+		for(var i=0;i<ele.length;i++){
+			//console.log(ele[i].type);
+			switch(ele[i].type){
+				case 'submit':
+				case 'button':
+				break;
+				case 'radio':
+				if(!ele[i].checked)
+				break;
+				default:
+				if(!ele[i].disabled)
+				arr.push(ele[i].name+'='+ele[i].value)
+			}
+		}
+		return arr.join('&');
+	}
+	
+	forms.onsubmit=function(){
+		alert(selectForm(forms));
+
+	}
+</script>
+</html>

@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		*{
+			margin:0;padding: 0;
+			text-decoration:none;
+			list-style: none;
+			font-family:'幼圆';
+		}
+
+		html{
+			background: pink;
+		}
+		.content{
+			width: 500px;
+			height: 600px;
+			background: #fff;
+			margin:20px auto 0;
+			box-sizing: border-box;
+			padding: 0 10px;
+			border-radius: 5px;
+		}
+		.content h4{
+			height: 40px;
+			line-height: 40px;
+			font-size: 14px;
+			text-indent: 5px;
+		}
+		form{
+			padding-left: 5px;
+			width: 95%;
+		}
+		form input{
+			height: 28px;
+			width: 120px;
+			border-radius:3px;
+			border:1px solid #ccc;
+			float: left;
+			margin-right: 10px;
+			font-size: 14px;
+		}
+		form p{
+			display:inline-block;
+			width: 300px;
+			height: 32px;
+		}
+
+		form p img{
+			height: 32px;
+			border:2px solid #fff;
+			opacity: 0.4;
+		}
+		form p img:hover{
+			border:2px solid #fa9;
+			border-radius: 3px;
+			opacity: 1;
+		}
+		.on{
+			border:2px solid #fa9;
+			border-radius: 3px;
+			opacity: 1;
+		}
+		form textarea{
+			height: 80px;
+			width: 100%;
+			border:1px solid #ccc;
+			border-radius: 5px;
+			resize: none;
+			margin-bottom: 10px;
+			box-sizing: border-box;
+			padding: 5px;
+			line-height: 20px;
+		}
+		form button{
+			float: right;
+			background: #3ae;
+			height: 30px;
+			width: 100px;
+			border:1px solid #5ce;
+			font-size: 14px;
+			color: #fff;
+			border-radius: 5px;
+			outline: none;
+			margin-left: 15px;
+			cursor: pointer;
+			margin-bottom: 20px;
+		}
+		form span{
+			float: right;
+			line-height: 30px;
+			color: #666;
+			font-size: 14px;
+		}
+		form b{
+			font-size: 22px;
+		}
+
+		.tatle{
+			clear: both;
+			background: rgba(60,120,142,0.2);
+			height: 35px;
+			border:1px solid #999;
+			border-bottom: 0;
+		}
+		.tatle span{
+			height: 26px;
+			line-height: 26px;
+			margin-top: 9px;
+			margin-left: 20px;
+			font-size: 14px;
+			padding: 0 10px;
+			background: #fff;
+			display:inline-block;
+			border-radius: 3px 3px 0 0;
+		}
+		ul{
+			overflow-y:auto;
+			height: 320px;
+		}
+		ul li{
+			height: 60px;
+			padding: 10px;
+			font-size: 16px;
+			clear: both;
+			position: relative;
+			line-height: 25px;
+			border-bottom: dashed 1px #ccc;
+		}
+		ul img{
+			height: 60px;
+		}
+		ul h5{
+			float: left;
+			margin-right: 10px;
+		}
+		ul p{
+			float: left;
+		}
+		ul date{
+			display: block;
+			color:#98A1FB;
+		}
+		ul a{
+			color: #154AA2;
+		}
+		ul b{
+			display:-webkit-inline-box;
+			font-weight: 400;
+			width: 200px;
+		}
+		ul span{
+			position: absolute;
+			right: 10px;bottom:10px;
+			cursor:pointer;
+			color: #226AA5;
+			display:none;
+		}
+	</style>
+</head>
+<body>
+	<div class="content" id="content">
+		<h4>说说你再想什么</h4>
+		<form action="#" method="get">
+			<input type="text" id="Name">
+			<p id="imgs">
+				<img src="images/1_03.jpg" class="on">
+				<img src="images/2_03.jpg" >
+				<img src="images/3_03.jpg" >
+				<img src="images/4_03.jpg" >
+				<img src="images/5_03.jpg" >
+				<img src="images/6_03.jpg" >
+				<img src="images/7_03.jpg" >
+			</p>
+			<textarea class="text" id="txtar"></textarea>
+			<button id="btn">发 布</button><span>还可以输入<b id="num">140</b>个字</span>
+		</form>
+		<div class="tatle">
+			<span>大家在说</span>
+		</div>
+		<ul id="uls">
+			<li>
+				<h5><img src="images/1_03.jpg" alt=""></h5>
+				<p><a href="#">花名</a><b>哈哈哈哈</b><date>2月28日 21:50</date><span>删除</span></p>
+			</li>
+			<li>
+				<h5><img src="images/2_03.jpg" alt=""></h5>
+				<p><a href="#">花大大：</a><b>是啊是啊</b><date>2月28日 21:50</date><span>删除</span></p>
+			</li>
+			<li>
+				<h5><img src="images/4_03.jpg" alt=""></h5>
+				<p><a href="#">隔壁花大大：</a><b>今天天气真不错</b><date>2月28日 21:50</date><span>删除</span></p>
+			</li>
+			
+		</ul>
+		
+	</div>
+</body>
+<script>
+	function Fn(){
+		this.content = document.getElementById("content");
+		this.name = document.getElementById("Name");
+		this.init();
+	}
+	Fn.prototype = {
+		init:function(){
+			var that = this;
+			this.val = this.name.value;
+			this.val.onblur = function(){
+				if(that.val != ""){
+					if(that.val == 8){
+						alert("dfg")
+					}
+				}
+			}
+		}
+	}
+	new Fn();
+</script>
+</html>

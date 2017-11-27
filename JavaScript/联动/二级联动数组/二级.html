@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>二级</title>
+	<style>
+	select{width: 120px; height: 30px; text-align: center; font-size: 18px; margin-right: 10px;}
+	</style>
+</head>
+<body>
+	<!-- <select name="" id="">
+		<option>河南</option>
+	</select>
+	<select name="" id="">
+		<option>郑州</option>
+		<option>开封</option>
+		<option>洛阳</option>
+	</select> -->
+</body>
+<script>
+	var provinces = ["请选择省份","河南","河北","北京"];
+		var citys = [ 
+			["郑州","开封","洛阳","安阳"],
+			["石家庄","廊坊","邯郸"],
+			["朝阳","海淀","昌平","房山"]
+		];
+
+	var select=document.createElement('select');
+	for(var i=0;i<provinces.length;i++){
+		var option=document.createElement('option');
+		var text=document.createTextNode(provinces[i]);
+		option.appendChild(text);
+		select.appendChild(option);
+	}
+	document.body.appendChild(select);
+	select.onchange=function(){
+		if(this.selectedIndex!=0){
+			for(var i=0;i<citys[this.selectedIndex-1].length;i++){
+				console.log(citys[this.selectedIndex-1][i])
+			}
+		}
+	}
+</script>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+		//寄生组合式继承
+		//1创建父级的原型对象
+		//2把原型对象的原型构造函数指向子类
+		//3子类原型对象=创建出来父级的原型对象
+
+		function per1(){
+			this.name='1507J'
+		}
+		per1.prototype.sayname=function(){
+			alert(this.name)
+		}
+		function per2(){
+			per1.call(this); //per1
+		}
+		//per2.prototype=new per1(); //per1
+
+		function createobject(Obj){
+			function f(){};
+			f.prototype=Obj;
+			return new f();
+		}
+		//子类  父类
+		function creatObj(a,b){
+			//父级的原型对象 
+			var proto=createobject(b.prototype);
+			proto.constructor=a;
+			a.prototype=proto;
+		}
+		creatObj(per2,per1)
+		var o=new per2();
+		alert(o.name);
+		o.sayname();
+
+
+	</script>
+</body>
+</html>

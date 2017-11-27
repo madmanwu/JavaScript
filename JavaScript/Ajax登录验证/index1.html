@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+<!--<form>-->
+	用户名<input type="text" name="name">
+	密码<input type="password" name="password">
+	<button id="btn">登录</button>
+<!--</form>-->
+<script>
+	var ajax={
+		http:function(url,type,data,success,error,boole){
+			var obj;
+			if(window.XMLHttpRequest){
+				obj=new XMLHttpRequest()
+			}else{
+				obj=new ActiveXObject('Microsoft.XMLHTTP')
+			}
+			var str='';
+			for(var i in data){
+				str+=i+'='+data[i]+'&';
+			}
+			str=str.replace(/&$/,'');
+			if(type=='get'){
+				obj.open(type,url+'?'+str,boole);
+				obj.send(null);
+			}else{
+				obj.open(type,url,boole);
+				obj.setRequestHeader('content-type','application/x-www-form-urlencoded');
+				obj.send(data);
+			}
+			obj.onreadystatechange=function(){
+				if(obj.readyState==4){
+					if(obj.status==200){
+						var data=obj.responseText;
+						success(data);
+					}else{
+						error('请求失败');
+					}
+				}else{
+					console.log('正在加载中...')
+				}
+			}
+		},
+		get:function(obj){
+			this.http(obj.url,'get',obj.data,obj.success,obj.error,obj.boole);
+		},
+		post:function(obj){
+			this.http(obj.url,'post',obj.data,obj.success,obj.error,obj.boole);
+		}
+	}
+	
+</script>
+<script>
+	function login(){
+		var text=document.getElementsByName('name')[0];
+		var pass=document.getElementsByName('password')[0];
+		var btn=document.getElementById('btn');
+		btn.onclick=function(e){
+			if(e.preventDefault){
+				e.preventDefault()
+			}else{
+				e.returnValue=false;
+			}
+			var tval=text.value;
+			var pval=pass.value;
+			ajax.get({
+				url:'data.php',
+				data:{name:tval,password:pval},
+				success:function(data){
+					if(data=='-1'){
+						alert('用户密码错误')
+					}else{
+						alert('登录成功')
+					}
+				},
+				error:function(data){
+					
+				},
+				boole:true
+			})
+		}
+	}
+	login();
+</script>
+</body>
+</html>

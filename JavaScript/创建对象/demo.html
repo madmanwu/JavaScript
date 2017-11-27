@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	
+</body>
+<script>
+	var person = {
+		name:"1507J",
+		age:"20"
+	}
+	console.log(person);
+
+	var person1 = new Object();
+	person1.name = "wuman";
+	person1.age = "20";
+	console.log(person1);
+
+	var arr = [1,2,3,4];
+	var num = arr.reduce(function(a,s,d,f){
+		return a+s;
+	})
+	console.log(num);
+
+	function fn(name,age){
+		var man = {
+			name:name,
+			age:age
+		}
+		return man;
+	}
+	var aa = fn("minmin","20"); 
+	console.log(aa);
+
+	function fnn(obj){
+		for(var i in aa){
+			console.log(i+"=="+obj[i]);
+		}
+	}
+	fnn(aa);
+
+	var array = [1,2,3,4];
+	var ops = {
+		"+":function(a,b){
+			return a+b;
+		},
+		"-":function(a,b){
+			return a-b;
+		},
+		"*":function(a,b){
+			return a*b;
+		},
+		"/":function(a,b){
+			return a/b;
+		},
+	}
+	function reduce(array,one,fuh){
+		for(var i=1;i<array.length;i++){
+			if(fuh in ops){
+				one = ops[fuh](one,array[i]);
+			}else{
+				alert("没有找到");
+			}
+		}
+		return one;
+	}
+	var result = reduce(array,array[0],"+");
+	console.log(result);
+
+	var a = {
+		name:"吴蔓",
+		age:20
+	}
+	/*delete a.name;
+	console.log(a);*/
+
+	Object.defineProperty(a,"name",{
+		writable:true,
+		// value:"wuman",
+		// enumerable:false,
+		// configurable:false,
+	})
+	a.name = "呜呜";
+
+	for(var i in a){
+		console.log(i+"=="+a[i]);
+	}
+	console.log(a);
+
+	// 对象转字符串
+	var x = {
+		name:"吴蔓",
+		age:20,
+	}
+	console.log(JSON.stringify(x));
+
+	// 字符串转换成对象
+	var str = JSON.stringify(x);
+	console.log(JSON.parse(str));
+
+	var num = {
+		ind:6,
+		get sayname(){
+			return this.ind++;
+		},
+		set sayname(n){
+			if(n>this.ind){
+				this.ind = n;
+			}else{
+				alert("不能小于6");
+			}
+		}
+	}
+	num.sayname = 3;
+	console.log(num.sayname);
+</script>
+</html>

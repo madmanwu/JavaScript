@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<div id="box" class="box" style="background: #fff;">
+		<span></span>
+		<span></span>
+		<span></span>
+	</div>
+	<div class="box" id="box1" style="width: 40px;height: 40px;background:yellow;"></div>
+	<div class="box"></div>
+</body>
+<script type="text/javascript" src="demo.js"></script>
+<script>
+	var box = document.getElementById("box1");
+	// console.log($('.box'));
+	$('.box').eq(2).css();
+</script>
+</html>

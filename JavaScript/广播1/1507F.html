@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+     *{margin:0;padding:0;list-style: none;}
+     #box{width: 500px;border:1px solid #000;border-radius: 5px;margin:20px auto;}
+     h2{font-size: 20px;list-style: 30px;}
+     #top{height: 50px;margin-top: 5px;}
+     #top input{float: left;width: 200px;height: 30px;outline: none;border-radius: 5px;}
+     ul li{float: left;margin-left: 8px;}
+     ul li img{width: 30px;height: 30px;}
+     #text{margin-top: 20px;}
+     p{margin-left: 90px;font-size: 20px;}
+     #btn{width: 100px;height: 30px;background: limegreen;color:#fff;font-size: 20px;border-radius: 5px;outline: none;}
+     dl{width: 94%;margin-left: 3%;position: relative;padding-bottom:15px;border-bottom: 1px solid #ccc;height: 70px;overflow: hidden;}
+     dl:hover{background:#ccc;}
+     dl:hover i{display:block;}
+     dl dt{width: 70px;height: 70px;position: absolute;top:10px;left:10px;}
+     dl dt img{width: 50px;height: 50px;}
+     dl dd{margin-left: 80px;padding-top: 10px;}
+     p span{font-size: 30px}
+     dl i{position: absolute;top:30px;right:50px;font-style: normal;color:red;display:none;}
+	</style>
+</head>
+<body>
+	<div id="box">
+		<h2>来,说说你在做什么,想什么</h2>
+		<div id="top">
+			<input type="text" id="ipt">
+			<ul id="pic">
+            <li><img src="img/1.jpg" alt=""></li>
+            <li><img src="img/2.jpg" alt=""></li>
+            <li><img src="img/3.jpg" alt=""></li>
+            <li><img src="img/4.jpg" alt=""></li>
+            <li><img src="img/5.jpg" alt=""></li>
+            <li><img src="img/6.jpg" alt=""></li>
+            <li><img src="img/7.jpg" alt=""></li>
+        </ul>
+		</div>
+		<textarea id="text" cols="50" rows="10" maxlength="140"></textarea>
+		<p>还能输入<span id="num">140</span>个字<button id="btn">广播</button></p>
+		 <h2>大家都在说</h2>
+		<div id="foot">
+        <dl>
+            <dt><img src="img/1.jpg" alt=""></dt>
+            <dd><span>永不回头：</span><b>酒要喝饱</b></dd>
+            <dd>10月3日 12：34</dd>
+            <i>删除</i>
+        </dl>
+        <dl>
+            <dt><img src="img/2.jpg" alt=""></dt>
+            <dd><span>永不回头：</span><b>话要说足</b></dd>
+            <dd>10月3日 12：34</dd>
+            <i>删除</i>
+        </dl>
+        <dl>
+            <dt><img src="img/3.jpg" alt=""></dt>
+            <dd><span>永不回头：</span><b>爱就爱个够，走就不回头</b></dd>
+            <dd>10月3日 12：34</dd>
+            <i>删除</i>
+        </dl>
+        </div>
+	</div>
+    <script src="move.js"></script>
+	<script>
+
+       // var data=['用户名','头像','广播内容']
+        function fun(){
+            //输入姓名
+            this.nametext=document.getElementById('ipt');
+            //广播文本框
+            this.text=document.getElementById('text');
+            this.num=document.getElementById('num');
+            this.ul=document.getElementById('pic');
+            //广播按钮
+            this.btn=document.getElementById('btn');
+            this.foot=document.getElementById('foot');
+            this.data=[];
+            //实现字数变化
+            this.init();
+        }
+        fun.prototype={
+            init:function(){
+                var that=this;
+                this.text.onkeyup=function(){
+                    that.change(140,this);
+                }
+                this.ul.onclick=function(e){
+                    var e = window.event || e;
+                    var tar= e.target || e.srcElement;
+                    if(tar.nodeName=='IMG'){
+                        var newImg=tar.cloneNode(true);
+                        that.data[1]=newImg;
+                    }
+                }
+                this.nametext.onblur=function(){
+                    var val=this.value;
+                    that.data[0]=val;
+                }
+                //广播按钮
+                this.btn.onclick=function(){
+                    var textVal=that.text.value;
+                    that.data[2]=textVal;
+                    if(that.data[0] && that.data[1] && that.data[2]){
+                        var dl=document.createElement('dl');
+                        var dt=document.createElement('dt');
+                        var dd=document.createElement('dd');
+                        dl.style.opacity=0;
+                        dl.style.height=0;
+                        var data=new Date();
+                        var m=data.getMonth()+1;
+                        var d=data.getDate();
+                        var h=data.getHours();
+                        var min=data.getMinutes();
+                        h=h<10?'0'+h:h;
+                        min=min<10?'0'+min:min;
+                        dt.appendChild(that.data[1]);
+                        dd.innerHTML='<span>'+that.data[0]+':</span><b>'+that.data[2]+'</b>';
+                        var dd1=document.createElement('dd');
+                        dd1.innerHTML=m+'月'+d+'日'+h+':'+min;
+                        var i=document.createElement('i');
+                        i.innerHTML='删除';
+                        dl.appendChild(dt);
+                        dl.appendChild(dd);
+                        dl.appendChild(dd1);
+                        dl.appendChild(i);
+                        that.foot.insertBefore(dl,that.foot.firstChild)
+                        that.text.value='';
+                        that.nametext.value='';
+                        that.num.innerHTML=140;
+                        that.data=[];
+                        startMove(dl,{'opacity':100,'height':70});
+                    }else{
+                        alert('信息输入不全！')
+                    }
+                }
+                this.foot.onclick=function(e){
+                    var e = window.event || e;
+                    var tar= e.target || e.srcElement;
+                    if(tar.nodeName=='I'){
+                        that.foot.removeChild(tar.parentNode)
+                    }
+                }
+            },
+            //文本框发生改变
+            change:function(num,tar){
+                var textLen=tar.value.length;
+                //当前字数
+                var curnum=num-textLen;
+                this.num.innerHTML=curnum;
+                //console.log(textLen);
+            }
+        }
+        new fun();
+	</script>
+</body>
+</html>

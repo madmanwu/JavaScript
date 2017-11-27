@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<button id="topbtn" style="margin-top:2000px;">返回顶部</button>
+	<a href="#">121333</a>
+	<script>
+		console.log(location);
+		for(key in location){
+			//console.log(key+'=='+location);
+		}
+		//获取完整地址
+		//console.log(location.href);
+		//？后
+		//console.log(location.search);
+		topbtn.onclick=function(){
+			location.hash='top';
+		}
+
+		//{name:'1507J',age:18}
+		//?name=1507j&age=18
+		//name=1507j&age=18
+		/*var urls=location.search;
+			urls=urls.substr(1);
+
+		var arr=urls.split('&');
+		var obj={};
+		for(var i=0;i<arr.length;i++){
+			var arr1=arr[i].split('=');
+			obj[arr1[0]]=arr1[1];
+		}
+		console.log(obj);*/
+	</script>
+</body>
+</html>

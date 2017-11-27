@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		*{padding:0;margin: 0;}
+		#a{width:500px;height:200px;border:1px solid #ccc;}
+		.cont{width:500px;height:600px;margin:50px auto;}
+		#facebox{/* display:none; */border:1px solid #ccc;}
+		#facebox ul{list-style:none;}
+		#facebox ul li{display:inline-block;padding:3px 6px;cursor:pointer;border-right:1px solid #ccc;}
+		#facebox ul li.active{background:red;color:#fff;}
+		.ul{}
+		.box>div{display:none;}
+		#showhtml{width:100%;height:100px;border:1px solid red;}
+	</style>
+</head>
+<body>
+	
+	<!-- content editable 可编辑状态  
+	1 true 可编辑 
+	2 false 不可编辑  
+	3 inherit从父元素继承(默认)-->
+	<div class="cont">
+		<input type="color" name="" id="cbtn">色板
+	    <!-- <button id="btn">red</button> -->
+	    <button id="btn1">bold</button>
+	    <button id="face">表情</button>
+	    <div id="facebox">
+	    	<!-- <ul>
+	    		<li class="active"></li>
+	    		<li></li>
+	    		<li></li>
+	    	</ul>
+	    	<div>
+	    		<div></div>
+	    		<div></div>
+	    		<div></div>
+	    	</div> -->
+	    </div>
+	    
+		<div id="a" contenteditable="true">
+			
+		</div>
+		<textarea id="showhtml">
+			
+		</textarea>
+	</div>
+	
+</body>
+<script type="text/javascript" src="data.js"></script>
+<script type="text/javascript" src="table.js"></script>
+<script> 
+//表情
+ var facebox=document.getElementById('facebox');
+ //装导航ul
+ var ul=document.createElement('ul');
+ console.log(face);
+ //装表情
+ var box=document.createElement('div');
+ ul.className='ul';
+ box.className='box';
+ //便利对象
+ for(var i in face){
+ 	console.log(i);
+ 	console.log(face[i]);
+ 	var li=document.createElement('li');
+ 	li.innerHTML=i;
+ 	ul.appendChild(li);
+ 	//创建3个表情盒
+ 	var div=document.createElement('div');
+ 	for(var j=0;j<face[i].length;j++){
+ 		console.log(face[i][j]);
+ 		var img=document.createElement('img');
+ 		//设置图片src
+ 		img.src='face/'+i+'/'+face[i][j];
+ 		div.appendChild(img);
+ 	}
+ 	box.appendChild(div);
+ }
+ facebox.appendChild(ul);
+ facebox.appendChild(box);
+ //设置类名
+	// ul.firstChild.className='active';
+	var lis=ul.getElementsByTagName('li');
+	lis[0].className='active';
+	box.firstChild.style.display='block';
+
+	new table('ul','box');
+</script>
+</html>

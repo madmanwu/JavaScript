@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		*{
+			margin:0 auto;
+			padding: 0;
+		}
+		#box{
+			border: 1px solid red;
+			width: 600px;
+			height: 300px;
+		}
+		#list{
+			list-style: none;
+			height: 30px;
+			border-bottom: 1px solid red;
+		}
+		#list>li{
+			width: 149px;
+			text-align: center;
+			height: 30px;
+			float: left;
+			border-right: 1px solid red;
+			line-height: 30px;
+		}
+		#info{
+			width: 2400px;
+			height: 270px;
+		}
+		#info>div{
+			width: 600px;
+			line-height: 270px;
+			text-align: center;
+			float: left;
+			height: 270px;
+		}
+		.two{
+			background: #CCC;
+		}
+		.one{
+			background: red;
+		}
+	</style>
+</head>
+<body>
+	<div id="box">
+		<ul id="list">
+			<li class="one">1</li>
+			<li>2</li>
+			<li>3</li>
+			<li>4</li>
+		</ul>
+		<div id="info">
+			<div class="two">11111</div>
+			<div>22222</div>
+			<div>33333</div>
+			<div>44444</div>
+		</div>
+	</div>
+</body>
+<script>
+	// 面向过程变成面向对象
+	// 把变量变为属性+this
+	// 把函数转化为原型的方法
+	// 把变量都变成属性
+	// 并且改变this的指向
+	function fn(){
+		this.li = list.getElementsByTagName("li");
+		this.dis = info.getElementsByTagName("div");
+	}
+	fn.prototype.bindEvent = function(){
+		var that = this;	
+		for(var i=0;i<this.li.length;i++){
+			this.li[i].index = i;
+			this.li[i].onclick = function(){
+				for(var j=0;j<that.li.length;j++){
+					that.li[j].className = "";
+					that.dis[j].style.display = "none";
+				}
+				this.className = "one";
+				that.dis[this.index].style.display = "block";
+				that.dis[this.index].className = "two";
+			}
+		}
+	}
+	var fnn = new fn();
+	fnn.bindEvent();
+</script>
+</html>

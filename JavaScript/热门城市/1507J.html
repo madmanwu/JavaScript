@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<div id="wrap">
+		<h3>搜索城市</h3>
+		<ul id="nav"></ul>
+		<div id="cont"></div>
+	</div>
+</body>
+<script src="data.js"></script>
+<script>
+   //console.log(hotel_hotData);
+	function city(box){
+		this.wrap=document.getElementById(box);
+		this.nav=this.wrap.getElementsByTagName('ul')[0];
+		this.cont=document.getElementById('cont');
+		this.init();
+		this.navclick();
+	}
+	city.prototype={
+		init:function(){
+			var arr=[];
+			var navArr=[];//['热门','ABCD','EFGH','YZ'];
+			for(var key in hotel_hotData){
+				arr.push(key);
+			}
+			//console.log(arr);
+			var abc=[];
+			for(var i=1;i<arr.length;i++){
+				// 1 2 3 4   5 6 7 8  9 10 11 12  24  25 26 
+				if(i%4==0 || i==arr.length-1){
+					//d x //y z
+					abc.push(arr[i]);
+					navArr.push(abc.join(''));
+					abc=[];
+				}else{
+					// a b c  //y 
+					abc.push(arr[i])
+				}
+			}
+			this.nav.innerHTML='<li>'+arr[0]+'</li>';
+			for(var i=0;i<navArr.length;i++){
+				this.nav.innerHTML+='<li>'+navArr[i]+'</li>';
+			}
+		},
+		navclick:function(){
+			var that=this;
+			this.nav.onclick=function(e){
+				var e=window.event || e;
+				var src=e.target || e.srcElement;
+				if(src.nodeName=='LI'){
+					//取数据
+					var data=that.createData(src.innerHTML);
+					//渲染结构
+					that.cont.innerHTML='';
+					for(var o in data){
+						var div=document.createElement('div');
+						var h3=document.createElement('h3');
+						var ul=document.createElement('ul');
+						for(var l=0;l<data[o].length;l++){
+							var li=document.createElement('li');
+							li.innerHTML=data[o][l].cname;
+							li.setAttribute('cid',data[o][l].id)
+							ul.appendChild(li);
+						}
+						h3.innerHTML=o;
+						div.appendChild(h3);
+						div.appendChild(ul);
+						that.cont.appendChild(div);
+					}
+				}
+			}
+		},
+		createData:function(name){
+			//console.log(name);
+			var dataobj={};
+			if(name=='热门'){
+				//热门字符串
+				var str=hotel_hotData[name]
+				var arr=str.split('@');
+				var data=[];
+				for(var i=1;i<arr.length;i++){
+					var obj={};
+					var arr1=arr[i].split('|');
+					obj.id=arr1[0];
+					obj.cname=arr1[1];
+					data.push(obj);
+				}
+				dataobj[name]=data;
+			}else{
+				console.log(name);
+				var narr=name.split('');
+				for(var k=0;k<narr.length;k++){
+					var data=[];
+					var a=hotel_hotData[narr[k]].split('@');
+					for(var j=1;j<a.length;j++){
+						var obj={};
+						var arr1=a[j].split('|');
+						obj.id=arr1[0];
+						obj.cname=arr1[1];
+						data.push(obj);
+					}
+					dataobj[narr[k]]=data;
+				}
+			}
+			return dataobj;
+		}
+	}
+	new city('wrap')
+</script>
+</html>

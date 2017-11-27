@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<div id="box">
+		<h3>热门城市</h3>
+		<ul id="nav"></ul>
+		<div id="cont"></div>
+	</div>
+</body>
+<script src="data.js"></script>
+<script>
+	function City(){
+		this.nav = document.getElementById("nav");
+		this.cont = document.getElementById("cont");
+		this.init();
+		this.fn();                                   
+	}
+	City.prototype={
+		init:function(){
+			var arr=[];
+			var navArr=[];
+			for(var key in hotel_hotData){
+				arr.push(key);
+			}
+			var abc=[];
+			for(var i=0;i<arr.length;i++){
+				if(i%4==0 || i=arr.length-1){
+					abc.push(arr[i]);
+					navArr.push(abc.join(""));
+					abc=[];
+				}else{
+					abc.push(arr[i]);
+				}
+			}
+			this.nav.innerHTML = "<li>"+arr[0]+"</li>";
+			for(var i=0;i<navArr.length;i++){
+				this.nav.innerHTML += "<li>"+navArr+"</li>";
+			}
+		},
+
+	}
+	new City();
+</script>
+</html>

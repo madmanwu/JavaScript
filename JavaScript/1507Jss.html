@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+<button>1507J</button>
+<button>1507F</button>
+<button>1507E</button>
+	<script>
+		function data(a){
+			for(var i in a){
+				alert(i+'='+a[i]);
+			}
+		}
+		function test(a){
+			console.log(a);
+		}
+		var js=document.createElement('script');
+		var head=document.getElementsByTagName('head')[0];
+		head.appendChild(js);
+		var btn=document.getElementsByTagName('button');
+		for(var i=0;i<btn.length;i++){
+			btn[i].onclick=function(){
+				var str=this.innerHTML;
+				//data({"1507J":"42 js3"})
+				js.src='http://localhost/a/a.php';
+				setTimeout(function(){
+					window.location.reload();
+				},200)
+			}		
+		}
+		
+	</script>
+
+</body>
+</html>

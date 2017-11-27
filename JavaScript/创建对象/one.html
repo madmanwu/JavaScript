@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		
+	</style>
+</head>
+<body>
+	
+</body>
+<script>
+	//创建对象
+	/*var person={
+		name:'1507J',
+		age:18,
+		key:'js3',
+		sayname:function(){
+			alert(this.name)
+		}
+	}
+	console.log(Object.prototype);
+	//检测 in 可以检测原型方法
+	console.log('toString' in person);
+	//检测 hasOwnProperty 检测自定义方法
+	console.log(person.hasOwnProperty('toString'));
+
+	
+
+	var b={
+		name:'裴凡翡',
+		age:17,
+		key:'js4'
+	}
+	function showInfo(obj,obj1){
+		for(var i in obj){
+			obj[i]=obj1[i];
+		}
+	}
+	showInfo(a,b);
+	
+	
+	//删除属性
+	/*delete a.name;
+	console.log(a);
+	console.log(b);*/
+
+	 //可编写 writable
+    //可枚举 enumerable  
+	//值 value
+	//可配置 configurable
+
+	//Object.defineProperty(对象名，属性名,{})
+	/*Object.defineProperty(b,'age',{
+		enumerable:true,
+		writable:true,
+		value:'丁萌',
+		configurable:true
+	})
+	//delete b.name;
+	for(var i in b){
+		console.log(i+'=='+b[i]);
+	}
+
+	console.log(a.toString());*/
+	/*var a={
+		name:'田旭',
+		age:18,
+		key:'js3'
+	}
+	//对象转字符串
+	var str=JSON.stringify(a);
+	//字符串转对象
+	var n=JSON.parse(str);
+	
+	console.log(n.toString());
+
+	var date=new Date();
+
+	console.log(date.toString());
+	//执行环境
+	console.log(date.toLocaleString());*/
+
+	var num={
+		ind:6,
+		name:'1507J',
+		get sayname(){
+			return this.ind++;
+		},
+		set sayname(n){
+			console.log(n);
+			console.log(this.ind);
+			if(n>this.ind){
+				this.ind=n
+			}else{
+				console.log('不能小于6');
+			}
+		}
+	};
+	num.sayname=8;
+	//alert(num.sayname);
+	console.log(num.sayname);
+	console.log(num.sayname);
+	//console.log(num.sayname);
+</script>
+</html>

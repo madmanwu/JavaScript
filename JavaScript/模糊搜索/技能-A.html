@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+  <style type="text/css" media="screen">
+    *{ margin: 0; padding: 0; }
+  </style>
+</head>
+<body>
+      <div>
+         <p>
+            请输入搜索关键字：<input type="text" id="key" />
+            <input type="button" value="搜 索" />
+         </p>
+      </div>
+	<script>
+       var texts = [
+          {name:"中国知网"},
+          {name:"中信银行"},
+          {name:"中国银行"},
+          {name:"中国联通"},
+          {name:"中国联通网上营业厅"},
+          {name:"中国好声音"},
+          {name:"中国好歌曲"},
+          {name:"中国好声音第三期"}
+       ];
+       // 1、请实现用户输入内容显示匹配到的搜索列表，如：
+       // 用户输入“中”，提示以上所有列表，输入“中国”提示所有以中国开始的列表，
+       // 输入“中国好”，提示所有以中国好开始的列表，如果没有匹配的内容，则什么、
+       // 都不提示。
+       // 2、用户按下键盘上的向上和向下方向键或者鼠标滑过选择对应的内容，对应的内容高亮显示
+       // 3、点击或者在高亮列表上敲回车，文本框的值显示为对应的内容、
+
+	</script>
+ <!--  <script type="text/javascript" src="script.js"></script> -->
+</body>
+<script>
+  var key=document.getElementById('key');
+  var div=document.getElementsByTagName('div')[0];
+  var ul=document.createElement('ul');
+  var count=-1;
+  div.appendChild(ul);
+  key.onkeyup=function(e){
+    var val=this.value;
+    var reg=new RegExp('^'+val);
+    var str='';
+    if(val!=''){
+      for(var i=0;i<texts.length;i++){
+        if(reg.test(texts[i].name)){
+          str+='<li index="'+i+'">'+texts[i].name+'</li>'
+        }
+      }
+    ul.innerHTML=str;
+    var lis=ul.getElementsByTagName('li');
+    var e= window.event || e;
+    var code=e.keyCode;
+    switch(code){
+      //下
+      case 40:
+        count++;
+        if(count>lis.length-1)  count=0;
+        lis[count].style.background='#ccc';
+      break;
+      //上
+      case 38:
+        count--;
+        if(count<0)  count=lis.length-1;
+        lis[count].style.background='#ccc';
+      break;
+      //回车
+      case 13:
+        this.value=lis[count].innerHTML;
+        ul.innerHTML='';
+        count=-1;
+      break;
+    }
+    }
+  }
+  ul.onmouseover=function(e){
+    var e = window.event || e;
+    var src=e.target || e.srcElement;
+    if(src.nodeName=='LI'){
+      var lis=ul.getElementsByTagName('li');
+      console.log(lis.length);
+    }
+  }
+ 
+</script>
+</html>

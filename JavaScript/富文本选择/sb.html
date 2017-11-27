@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<div>
+		<input type="color" name="" id="cbtn">色板
+	 	<button id="btn">red</button>
+	    <button id="btn1">bold</button>
+	    <button id="face">表情</button>
+		<div style="border: 1px solid #000;width: 404px;height: 200px;"  contenteditable="true">
+			
+		</div>
+		<textarea id="showhtml" style="width: 400px;height: 100px;">
+			
+		</textarea>
+	</div>
+</body>
+<script>
+	function execC(m,v){
+		document.execCommand(m,false,v);
+	}
+</script>
+</html>

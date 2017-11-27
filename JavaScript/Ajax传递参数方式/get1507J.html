@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+name:<input type="text" id="n" value="zhangsan">
+age:<input type="text" id="a" value="13">
+	<script>
+	//http://localhost:8080/day12/data.json?name=1507j&age=18
+
+
+		try{
+			var xml=new XMLHttpRequest();
+		}catch(e){
+			var xml=new ActiveXObject('Microsoft.XMLHTTP')
+		}
+		//get ulr  name age pass email
+		xml.open('get','data.json?name='+n.value+'&age='+a.value,true)
+
+		xml.send(null);
+
+		xml.onreadystatechange=function(){
+			if(xml.readyState==4 && xml.status==200){
+				console.log(xml.responseText)
+			}
+		}
+	</script>
+</body>
+</html>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		*{padding:0;margin:0;}
+		html,body{width:100%;height:100%;}
+		.mark{width:100%;height:100%;background:rgba(0,0,0,.6); position:absolute;top:0;left:0;z-index:10;}
+		.dialog{width:300px;height:100px;background:#fff;position:absolute;top:50%;left:50%;z-index:11;}
+		.dialog span{position:absolute;right:0;top:0;background:red;color:#fff;text-align:center;line-height:40px;width:40px;height:40px;cursor:pointer;}
+	</style>
+</head>
+<body>
+	<div id="wrap">
+		<button id="btn1">弹窗</button>
+		<button id="btn2">自动消失弹窗</button>
+		<button id="btn3">拖拽弹窗</button>
+		<!-- <div class="mark"></div>
+		<div class="dialog"><span>X</span></div> -->
+	</div>
+</body>
+<script>
+	function dialog(btn){
+		var that=this;
+		this.check=true;
+		this.btn=btn;
+		//按钮绑定点击事件
+		this.btn.onclick=function(){
+			//创建弹窗节点
+			that.createDom();
+		}
+	}
+	//创建dom结构
+	dialog.prototype.createDom=function(){
+		this.timer=null;
+		this.parent=document.getElementById('wrap');
+		this.mark=document.createElement('div');
+		this.mark.className='mark';
+		this.dialogDiv=document.createElement('div');
+		this.dialogDiv.className='dialog';
+		this.close=document.createElement('span');
+		this.close.innerHTML='X';
+		this.dialogDiv.appendChild(this.close);
+		this.parent.appendChild(this.mark);
+		this.parent.appendChild(this.dialogDiv);
+		this.winW=document.documentElement.clientWidth || document.body.clientWidth;
+		this.winH=document.documentElement.clientHeight || document.body.clientHeight;
+		this.boxW=this.dialogDiv.offsetWidth;
+		this.boxH=this.dialogDiv.offsetHeight;
+		this.dialogDiv.style.left=(this.winW-this.boxW)/2+'px';
+		this.dialogDiv.style.top=(this.winH-this.boxH)/2+'px';
+		//removeDialog 关闭弹窗
+		this.removeDialog();
+	}
+	//删除弹窗
+	dialog.prototype.removeDialog=function(){
+		var that=this;
+		this.close.onclick=function(){
+			//点击关闭按钮清楚定时器
+			clearTimeout(that.timer);
+			that.parent.removeChild(that.mark);
+			that.parent.removeChild(that.dialogDiv);
+		}
+	}
+	//把btn按钮
+	var btn1=document.getElementById('btn1');
+	new dialog(btn1);
+
+	function autoClose(btn){
+		//借用dialog的私有属性和方法
+		dialog.call(this,btn);
+		var that=this;;
+		this.btn.onclick=function(){
+			that.createDom();
+			//autoClose添加自动关闭
+			that.guanbi();
+		}
+		
+	}
+	function objectCreate(obj){
+		function f(){};
+		f.prototype=obj;
+		return new f();
+	}
+	//autoClose 继承 dialog的原型
+	autoClose.prototype=objectCreate(dialog.prototype);
+	//autoClose的原型构造函数指向自己
+	autoClose.prototype.constructor=autoClose;
+	//自动关闭
+	autoClose.prototype.guanbi=function(){
+		var that=this;
+		this.timer=setTimeout(function(){
+			//3秒之后调用close的点击事件
+			that.close.onclick();
+		},3000)
+	}
+
+	var btn2=document.getElementById('btn2');
+	var o=new autoClose(btn2)
+
+	function tuozhuai(){
+		dialog.apply(this,arguments);
+		var that=this;
+		this.btn.onclick=function(){
+			//创建弹窗节点
+			that.createDom();
+			that.move();
+		}
+		
+	}
+	if(Object.create){
+		tuozhuai.prototype=Object.create(dialog.prototype)
+	}else{
+		function f(){}
+		//复制dialog.prototype
+		f.prototype=dialog.prototype;
+		//给tuozhuai.prototype赋值
+		tuozhuai.prototype=f.prototype;
+	}
+	tuozhuai.prototype.constructor=tuozhuai;
+	tuozhuai.prototype.move=function(){
+		console.log(this.winW+'-'+this.winH)
+		console.log(this.boxW+'-'+this.boxH)
+		var that=this;
+		this.dialogDiv.onmousedown=function(e){
+			var e=window.event || e;
+			//鼠标距盒子的距离
+			var x=e.clientX-that.dialogDiv.offsetLeft;
+			var y=e.clientY-that.dialogDiv.offsetTop;
+			document.onmousemove=function(e){
+				var ev=e || window.event;
+				var l=ev.clientX-x;
+				var t=ev.clientY-y;
+				that.dialogDiv.style.left=l+'px';
+				that.dialogDiv.style.top=t+'px';
+			}
+			document.onmouseup=function(){
+				document.onmousemove=null;
+			}
+		}
+	}
+	new tuozhuai(btn3);
+	//alert(o.check);
+</script>
+</html>

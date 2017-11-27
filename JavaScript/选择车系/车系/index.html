@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+	<div class="crumbs-r">
+	  <div class="analog-select brand" data-flag = "1" data-branId="2">
+	   <div class="analog-select-text"><p>品牌</p></div>
+		   <div class="analog-select-con">
+			   <div class="analog-select-conText" id="s_brand_id">
+			   	   <!--此处渲染内容，不允许使用select来实现-->
+			   </div>
+		   </div>
+	   </div>
+	   <div class="analog-select" data-flag = "1">
+			<div class="analog-select-text" id="serCar"><p>车系</p></div>
+				<div class="analog-select-cons" id="car">
+				    <div class="analog-select-conText" id="s_serie_id">
+				    	<!--此处渲染内容，不允许使用select来实现-->
+				    </div>
+				</div>
+			</div>
+			<input type="button" value="选车" class="choose-btn" id="search_serie">
+		</div>
+	</div>
+   </div>
+    
+   <script type="text/javascript" src="ajax.js"></script>
+<script>
+      ajax.post({
+         urls:'json.json',
+         boole:true,
+         datasrc:{},
+         success:function(data){
+            
+            var data=JSON.parse(data);
+            new init(data);
+         },
+         error:function(data){
+
+         }
+      })  
+
+      function init(a){
+         var that=this;
+         this.btn=document.getElementById('search_serie');
+         this.data=a;
+         this.title1=document.getElementsByClassName('analog-select-text')[0];
+         this.title1p=this.title1.getElementsByTagName('p')[0];
+         this.title2=document.getElementsByClassName('analog-select-text')[1];
+         this.title2p=this.title2.getElementsByTagName('p')[0];
+         this.list1=document.getElementById('s_brand_id');
+         this.list2=document.getElementById('s_serie_id');
+         //渲染一级数据
+         for(var key in this.data){
+               var div=document.createElement('div');
+               div.innerHTML='<h2>'+key+'</h2>';
+                 for(var i=0;i<this.data[key].length;i++){
+                  div.innerHTML+='<span style="display:block;height:20px;line-height:20px" data-type="'+this.data[key][i].id+'" data-ind="'+i+'" data-lb="'+key+'">'+this.data[key][i].brand+'</span>'
+                 }
+               this.list1.appendChild(div);
+         }
+         //点击显示隐藏
+         this.title1.onclick=function(){
+            //alert(1234)
+            that.toggleShow(this);
+         }
+         this.title2.onclick=function(){
+            //alert(1234)
+            that.toggleShow(this);
+         }
+         this.list1.onclick=function(e){
+            var e = window.event || e;
+            var src=e.target || e.srcElement;
+            if(src.nodeName=='SPAN'){
+               that.title2p.innerHTML='车系';
+               var val=src.innerHTML;
+               that.title1p.innerHTML=val;
+               that.title1p.id=src.getAttribute('data-type');
+               that.list1.parentNode.style.display='none';
+               that.list2.parentNode.style.display='block';
+               var ind=src.getAttribute('data-ind');
+               var lb=src.getAttribute('data-lb');
+               var arr=that.data[lb][ind].types;
+               var str='';
+               for(var j=0;j<arr.length;j++){
+                  str+='<p data-type="'+arr[j].value+'">'+arr[j].name+'</p>'
+               }
+               that.list2.innerHTML=str;
+            }
+         }
+         this.list2.onclick=function(e){
+            var e = window.event || e;
+            var src=e.target || e.srcElement;
+            if(src.nodeName=='P'){
+               var val=src.innerHTML;
+               that.title2p.innerHTML=val;
+               that.title2p.id=src.getAttribute('data-type');
+               that.list2.parentNode.style.display='none';
+            }
+         }
+         this.btn.onclick=function(){
+            var brand=that.title1p.innerHTML;
+            var id=that.title1p.getAttribute('id');
+            var type=that.title2p.innerHTML;
+            var value=that.title2p.getAttribute('id');
+            ajax.get({
+               urls:'demo.php',
+               boole:true,
+               datasrc:{brand:brand,id:id,type:type,value:value},
+               success:function(data){
+                  alert(data);
+               },
+               error:function(data){
+                  alert(data);
+               }
+            })
+         }
+      }
+
+      init.prototype.toggleShow=function(tar){
+            if(tar.nextSibling.nextSibling.style.display=='block'){
+               tar.nextSibling.nextSibling.style.display='none'
+            }else{
+               tar.nextSibling.nextSibling.style.display='block'
+            }
+         
+      }
+</script>
+
+</body>
+</html>

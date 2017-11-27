@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="address.js"></script>
+</head>
+<body>
+	<select name="" id="province"></select>
+	<select name="" id="city"></select>
+	<select name="" id="area"></select>
+
+</body>
+<script>
+	for(var i=0;i<data.length;i++){
+		var option = document.createElement("option");
+		var opText = document.createTextNode(data[i].name);
+		option.setAttribute("value",i);
+		option.appendChild(opText);
+		province.appendChild(option);
+	}
+	fn(0);
+	function fn(num){
+		city.innerHTML = "";
+		for(var i=0;i<data[num].city.length;i++){
+			var option = document.createElement("option");
+			var opText = document.createTextNode(data[num].city[i].name);
+			option.appendChild(opText);
+			city.appendChild(option);
+		}
+	}
+	fnn(0,0);
+	function fnn(citynum,areanum){
+		area.innerHTML='';
+		for(var i=0;i<data[citynum].city[areanum]["area"].length;i++){
+			var option = document.createElement("option");
+			var opText = document.createTextNode(data[citynum].city[areanum]["area"][i]);
+			option.appendChild(opText);
+			area.appendChild(option);
+		}
+	}
+	var num;
+	province.onchange = function(){
+		fn(this.selectedIndex);
+		fnn(this.selectedIndex,0);
+		num=this.selectedIndex;
+	}
+	city.onchang = function(){
+		fnn(num,this.selectedIndex);
+	}
+</script>
+</html>

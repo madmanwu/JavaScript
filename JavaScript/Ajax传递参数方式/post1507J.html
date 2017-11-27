@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+		if(window.XMLHttpRequest){
+               var obj = new XMLHttpRequest();
+		}else{
+			obj = new ActiveXObject("Microsoft.XMLHTTP");
+		}
+		//传参数的方式不一样   get在url上传参   post发送参数
+		obj.open('post','data.json',true);
+
+
+		//设置http头部信息
+		obj.setRequestHeader("content-type","application/x-www-form-urlencoded");
+
+		obj.send({name:"1507J",age:18});
+
+		
+
+		obj.onreadystatechange=function(){
+			if(obj.readyState==4 && obj.status==200){
+				//console.log(obj.getAllResponseHeaders());
+				console.log(obj.responseText);
+			}
+		}
+	</script>
+</body>
+</html>

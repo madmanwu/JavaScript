@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<table id="table" border="1">
+		<tr>
+			<td>数量</td>
+			<td>价格</td>
+		</tr>
+		<tr>
+			<td>5</td>
+			<td>65</td>
+		</tr>
+		<tr>
+			<td>2</td>
+			<td>23</td>
+		</tr>
+		<tr>
+			<td>8</td>
+			<td>49</td>
+		</tr>
+		<tr>
+			<td>3</td>
+			<td>66</td>
+		</tr>
+	</table>
+</body>
+<script>
+	var table = document.getElementById("table")
+	,	firstTR = table.rows[0]
+	,	firstTD = firstTR.cells;
+	for(var i=0;i<firstTD.length;i++){
+		firstTD[i].index = i;
+		firstTD[i].onclick = function(){
+			var tr = table.rows;
+			var arr=[];
+			for(var j=1;j<tr.length;j++){
+				arr.push({value:tr[j].cells[this.index].innerHTML,html:tr[j]});
+			}
+			console.log(arr);
+			for(var k=0;k<arr.length;k++){
+				for(var n=k+1;n<arr.length;n++){
+					if(parseInt(arr[k].value)<parseInt(arr[n].value)){
+						var temp = arr[k];
+						arr[k] = arr[n];
+						arr[n] = temp;
+					}
+				}
+			}
+			for(var w=0;w<arr.length;w++){
+				table.appendChild(arr[w].html);
+			}
+		}
+	}
+</script>
+</html>

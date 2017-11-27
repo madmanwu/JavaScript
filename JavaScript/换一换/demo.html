@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		*{padding:0;margin:0;list-style:none;}
+		#wrap{width:300px;height:300px;position:relative;}
+		#wrap ul,#wrap ul li{width:300px;height:300px;overflow:hidden;}
+		#wrap ul li{display:none;}
+		#wrap ul li.show{display:block;opacity:0;}
+		#wrap p{float:left;width:90px;height:90px;padding:5px;position:relative;cursor:pointer;}
+		#wrap p img{width:100%;height:100%;}
+		#btn{width:90px;height:90px;background:skyblue;text-align:center;line-height:90px;position:absolute;bottom:5px;right:5px;color:#fff;cursor:pointer;font-size:20px;font-family: '微软雅黑';}
+		#wrap p span{height:20px;background:rgba(0,0,0,.6);font-size:12px;color:#fff;display:none;bottom:5px;left:5px;position:absolute;right:5px;
+			text-align:center;line-height:20px;}
+		#wrap p:hover span{display:block;}
+	</style>
+</head>
+<body>
+	<!-- <div id="wrap">
+		<ul id="cont">
+			<li class="show">
+				<p><img src="img1.jpg" alt=""><span>图片一</span></p>
+				<p><img src="img2.jpg" alt=""><span>图片一</span></p>
+				<p><img src="img3.jpg" alt=""><span>图片一</span></p>
+				<p><img src="img4.jpg" alt=""><span>图片一</span></p>
+				<p><img src="img5.jpg" alt=""><span>图片一</span></p>
+				<p><img src="img6.jpg" alt=""><span>图片一</span></p>
+				<p><img src="img7.jpg" alt=""><span>图片一</span></p>
+				<p><img src="img6.jpg" alt=""><span>图片一</span></p>
+			</li>
+			<li></li>
+			<li></li>
+		</ul>
+		<div id="btn">换一换</div>
+	</div> -->
+	<div id="wrap">
+		<ul id="cont"></ul>
+		<div id="btn">换一换</div>
+	</div>
+</body>
+<script src="data.js"></script>
+<script src="move.js"></script>
+<script>
+	// ul的那个大盒子
+	var cont = document.getElementById("cont");
+	// 换一换按钮
+	var btn = document.getElementById("btn");
+	// 渲染结构
+	// for循环遍历目标对象
+	for(var i=0;i<data.length;i++){
+
+		// 生成新的li的标签
+		var newli = document.createElement("li");
+		// for循环遍历对象下的img
+		for(var a=0;a<data[i].img.length;a++){
+			// 生成新的p标签
+			var newp = document.createElement("P");
+			// 生成新的img标签
+			var newimg = document.createElement("img");
+			// 新生的img标签的链接地址
+			newimg.src = data[i].img[a];
+			// 生成新的span标签
+			var newspan = document.createElement("span");
+			// 新生成的span里面的内容在对象目标里面取
+			newspan.innerHTML = data[i].info[a];
+			// 将新生成的img标签添加到新生成的p标签的后面
+			newp.appendChild(newimg);
+			// 将新生成的span标签添加到p标签里面
+			newp.appendChild(newspan);
+			// 将新生成的p标签添加到新生成的li标签里面
+			newli.appendChild(newp);
+		}
+		// 将新生成li标签放进ul那个大盒子里面
+		cont.appendChild(newli);
+	}
+
+
+	
+	// 给ul里面的第一个li添加class名字
+	cont.firstChild.className = "show";
+	// 给ul里面的第一个li设置成不透明
+	cont.firstChild.style.opacity = "1";
+	// 获取到ul里面的所有li
+	var lis = document.getElementsByTagName("li");
+	// 声明一个计数器并赋初值
+	var count = 0;
+	// 点击切换
+	btn.onclick = function(){
+		// 点击++
+		count++;
+		// 判断如果计数器大于等于lis的长度
+		if(count >= lis.length){
+			// 计数器就恢复到首次显示的那一张
+			count = 0;
+		}
+		// for循环遍历li标签的长度，下面的小图几要符合li的长度
+		for(var k=0;k<lis.length;k++){
+			// 遍历到的li的class名字为空
+			lis[k].className = "";
+			// 框架遍历到的li为透明
+			startMove(lis[k],{opacity:0});
+		}
+		// 遍历到的li的class名字为show
+		lis[count].className = "show";
+		// 框架遍历到的li为不透明
+		startMove(lis[count],{opacity:100});
+	}
+</script>
+</html>

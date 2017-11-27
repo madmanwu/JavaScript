@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		*{margin:0;padding:0;}
+		body,html{width:100%;height:100%;overflow:hidden;}
+		#wrap{background:#000;width:100%;height:100%;}
+	</style>
+</head>
+<body>
+	<div id="wrap"></div>
+</body>
+<script>
+	function Fn(box){
+		var that = this;
+		this.box = document.getElementById(box);
+		this.timer = null;
+		this.timer = setInterval(function(){
+			that.img = document.createElement('img');
+			that.img.src = "star.png";
+			that.box.appendChild(that.img);
+			that.remove(that.img);
+			that.style();
+		},1000);
+	}
+	// 声明一个最大值、最小值函数
+	Fn.prototype.rand = function(max,min){
+		return Math.floor(Math.random()*(max-min+1)+min);
+	}
+	Fn.prototype.style = function(){
+		this.img.style.position = "absolute";
+		this.left=document.documentElement.clientWidth-this.img.style.width || document.body.clientWidth;
+		this.top=document.documentElement.clientHeight || document.body.clientHeight;
+		this.ran = this.rand(100,10);
+		this.img.style.left=this.rand(this.left,0)+'px';
+		this.img.style.top=this.rand(this.top,0)+'px';
+		this.img.style.width = this.ran+"px";
+		this.img.style.height = this.ran+"px";
+	}
+	Fn.prototype.remove = function(ind){
+		var that = this;
+		ind.onclick = function(){
+			that.box.removeChild(ind);
+		}
+	}
+	new Fn("wrap");
+
+	Ss.prototype = Object.create(Fn.prototype);
+	Ss.prototype.constructor = Ss;
+
+	function Ss(){
+		this.Fn();
+		this.style();
+		this.rand();
+	}
+</script>
+</html>

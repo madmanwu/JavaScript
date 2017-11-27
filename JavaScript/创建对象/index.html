@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	
+</body>
+<script>
+	// 创建对象
+	// 1、对象字面量
+	var person={
+		name:"1507J",
+		age:"20"
+	}
+	console.log(person.age);
+
+	// 函数构造
+	var person1 = new Object();
+	person1.name = "1507J";
+	console.log(person1);
+
+	// 封装函数
+	function fn(name,age){
+		var man={
+			name:name,
+			age:age
+		}
+		return man;
+	}
+	var aa = fn("1507J","20");
+	// 遍历对象
+	/*for(var i in aa){
+
+	}*/
+	function showInfo(obj){
+		for(var i in aa){
+			console.log(i+"=="+obj[i]);
+		}
+	}
+	showInfo(aa);
+
+	var arr = [1,2,34,4];
+	/*var num = arr.reduce(function(a,s,d,f){
+		return a*s;
+	})
+	console.log(num);*/
+
+	var ops={
+		"+":function(x,y){
+			return x+y;
+		},
+		"-":function(x,y){
+			return x-y;
+		},
+		"*":function(x,y){
+			return x*y;
+		},
+		"/":function(x,y){
+			return x/y;
+		}
+	}
+	// 封装函数 传入参数 1、数组 2、第一个数 3、符号
+	function reduce(arr,prev,fun){
+		// 遍历数组中的每一个数值
+		for(var i=1;i<arr.length;i++){
+			// 判断传入的符号是否在对象中
+			if(fun in ops){
+				// 第一个数 对象中的符号 第一个数 每一个数
+				prev = ops[fun](prev,arr[i]);
+			}else{
+				alert("没有找到");
+			}
+		}
+		// 返回第一个数
+		return prev;
+	}
+	var result = reduce(arr,arr[0],"*");
+	console.log(result);
+
+	var a = {
+		name:"吴蔓",
+		age:20
+	}
+	/*delete a.name;
+	console.log(a);*/
+
+	Object.defineProperty(a,"name",{
+		writable:true,
+		// value:"wuman",
+		// enumerable:false,
+		// configurable:false,
+	})
+	a.name = "呜呜";
+
+	for(var i in a){
+		console.log(i+"=="+a[i]);
+	}
+	console.log(a);
+
+	
+</script>
+</html>

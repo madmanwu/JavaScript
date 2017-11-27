@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		*{padding:0;margin: 0;}
+		#a{width:500px;height:200px;border:1px solid #ccc;}
+		.cont{width:500px;height:600px;margin:50px auto;}
+		#facebox{display:none;}
+		#showhtml{width:100%;height:100px;border:1px solid red;}
+	</style>
+</head>
+<body>
+	
+	<!-- content editable 可编辑状态  
+	1 true 可编辑 
+	2 false 不可编辑  
+	3 inherit从父元素继承(默认)-->
+	<div class="cont">
+		<input type="color" name="" id="cbtn">色板
+	    <button id="btn">red</button>
+	    <button id="btn1">bold</button>
+	    <button id="face">表情</button>
+	    <table id="facebox">
+	    	<tr>
+	    		<td><img src="face/erdaimu/45.gif" alt=""></td>
+	    		<td><img src="face/erdaimu/46.gif" alt=""></td>
+	    	</tr>
+	    	<tr>
+	    		<td><img src="face/erdaimu/47.gif" alt=""></td>
+	    		<td><img src="face/erdaimu/48.gif" alt=""></td>
+	    	</tr>
+	    </table>
+		<div id="a" contenteditable="true">
+			
+		</div>
+		<textarea id="showhtml">
+			
+		</textarea>
+	</div>
+	
+</body>
+<script>
+	
+	var cbtn = document.getElementById("cbtn");
+	
+	function execC(m,v){
+		document.execCommand(m,false,v);
+	}
+	cbtn.onchange =function(){
+		execC("forecolor",this.value)
+	}
+	btn.onclick=function(){
+		//可以对文档执行预定义命令
+		//命令名 浏览器定义
+		//false
+		//属性值 null 默认值
+		execC('forecolor','red');
+	}
+	btn1.onclick=function(){
+		execC('bold',null);
+	}
+	var a1=false;
+	face.onclick=function(){
+		if(a1){
+			facebox.style.display='none';
+			a1=false;
+		}else{
+			facebox.style.display='block';
+			a1=true;
+		}
+		
+	}
+	a.onblur=function(){
+		var html=this.innerHTML;
+		showhtml.value=html;
+	}
+	facebox.onclick=function(e){
+		var e= e || window.event;
+		var src= e.srcElement || e.target;
+		if(src.nodeName=='IMG'){
+			//alert(src.src);
+			execC('insertimage',src.src);
+		}
+	}
+
+</script>
+</html>

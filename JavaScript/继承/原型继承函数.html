@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<div id="box">
+		<div class="box"></div>
+	</div>
+	
+	<script>
+	//原型继承
+	//将父类的实例作为子类的原型
+	//缺点:原型属性共享(属性值为引用值类型)
+		//父类
+		function parent(){
+			this.name='1507J';
+			this.friend=['1507F','1507E','1508F'];
+		}
+		//子类
+		function child(){
+			//这是子类
+			parent.call(this);
+		}
+
+		child.prototype=new parent();
+		child.prototype.constructor=child;
+		var p1=new child();
+		var p2=new child();
+		p1.friend.push('1507A');
+		alert(p1.friend);
+		alert(p2.friend);
+
+
+		
+/*
+
+		//判断原型对象 是否是 实例 的原型
+		alert(child.prototype.isPrototypeOf(p1))
+		alert(parent.prototype.isPrototypeOf(p1))
+		alert(Object.prototype.isPrototypeOf(p1))
+
+		alert(p1 instanceof child)
+		alert(p1 instanceof parent)
+		alert(p1 instanceof Object)
+
+
+		//通过实例获取原型对象
+		console.log(Object.getPrototypeOf(p1));
+		console.log(p1.constructor.prototype);*/
+
+
+		var elemen={
+			getId:function(id){
+				return document.getElementById(id)
+			},
+			getClassName:function(parent,classn){
+				var reg=new RegExp("(\\s|^)"+classn+"(\\s|$)");
+				var dom=parent.getElementsByTagName('*');
+				var str=[];
+				for(var i=0;i<dom.length;i++){
+					if(reg.test(dom[i].className)){
+                         str.push(dom[i]);
+					}
+				}
+				return str;
+			}
+		}
+		var box=elemen.getClassName(elemen.getId('box'),'box');
+		console.log(box);
+	</script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		 #box{width: 200px;background: rgba(125,35,45,1);}
+	</style>
+</head>
+<body>
+	<input type="range" max="8" min="1" value="1" id="ipt" step="0.1">  
+
+	<div style="width: 50px;padding: 50px;border: 1px solid #000;" id="box"	></div>
+
+</body>
+<script>
+	var box = document.getElementById("box")
+	,	ipt = document.getElementById("ipt");
+
+	function getstyle(tar,attr){
+		if(tar.currentStyle){
+			return tar.currentStyle[attr];
+		}else{
+			return getComputedStyle(tar,null)[attr];
+		}	
+	}
+	var arr = getstyle(box,'background').match(/[\d\.]+/g);
+	console.log(arr)
+
+	// function rand(min,max){
+	// 	return Math.floor(Math.random()*(max-min+1)+min)
+	// }
+
+	ipt.onchange = function(){
+		var r = Math.max(Math.min(Math.round(arr[0]*this.value),255),0);
+		var g = Math.max(Math.min(Math.round(arr[1]*this.value),255),0);
+		var b = Math.max(Math.min(Math.round(arr[2]*this.value),255),0);
+		box.style.background = 'rgb('+ r + ','+g+','+b+')';
+	}
+</script>
+</html>

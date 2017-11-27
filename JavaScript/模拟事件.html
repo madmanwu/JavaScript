@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>模拟事件</title>
+</head>
+<div id="wrap" style="width:100px;height:100px;background:red;">
+	
+</div>
+<body>
+	<script type="text/javascript">
+		wrap.addEventListener('abc',function(e){
+			alert(e);
+		},false)
+		//模拟事件
+		//创建事件类型 
+		var e=document.createEvent('MouseEvents');
+		//初始化设置事件
+		e.initMouseEvent('abc',true,true,document.defaultView);
+		//当前dom元素绑定自定事件
+		wrap.dispatchEvent(e);
+	</script>
+</body>
+</html>

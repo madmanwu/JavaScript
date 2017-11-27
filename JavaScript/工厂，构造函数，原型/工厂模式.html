@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+
+	</style>
+</head>
+<body>
+	
+</body>
+<script>
+	// 工厂模式:可以批量创建对象，不能解决对象识别问题，方法和属性私有化
+	/*function fnn(name,age){
+		var p = {
+			name:name,
+			age:age,
+			sayname:function(){
+				alert(this.name+":"+this.age);
+			}
+		}
+		return p;
+	}
+	var aa = fnn("wuman",20);
+	aa.sayname();
+	var bb = fnn("guoyaxin",20);
+	bb.sayname();
+
+	// 构造函数模式：可以解决对象识别问题，浪费内存
+	function fn(name,age){
+		this.name=name;
+		this.age=age;
+		this.saynum = function(){
+			alert(this.name);
+		}
+	};
+	var num = new fn("wuman",20);
+	var obj = new Object();
+	// 检测原型构造函数
+	console.log(obj.constructor == Object) 
+	fn.call(obj,"吴蔓",4);
+	console.log(obj);
+	
+	console.log(arr instanceof Array);
+	console.log(arr instanceof Object);
+	console.log(Array instanceof Object);
+
+	// 原型模式
+	var persons = {
+		name:"wuman",
+		age:20,
+		sayname:function(){
+			alert(this.name+"蔓蔓")
+		}
+	}
+	console.log(persons instanceof Object);
+	console.log(Object.prototype);
+
+	function setnum(){
+		this.name = "124";
+		this.error1 = function(){
+			alert("这是错误信息");
+		}
+	}
+
+	function setnum1(){
+		this.name = "124";
+		this.error1 = function(){
+			alert("这是错误信息");
+		}
+	}
+	var aa = new setnum();
+	var bb = new setnum1();
+	alert(aa.error == bb.error1);
+	console.log(setnum.prototype);*/
+
+	// 工厂模式
+	function fn(name,age){
+		var o = new Object(); // 属性
+			o.name = name; // 属性
+			o.age = age; // 属性
+			o.sayname = function(){ // 方法
+				alert(this.name + "前端");
+			}
+			return o;
+	}
+	var p1 = fn("wuman",18);
+	var p2 = fn("minxuepai",18);
+	console.log(p1);
+	console.log(p2);
+	// 解决不了对象识别问题
+	console.log(p1.constructor);
+	console.log(p2.constructor);
+</script>
+</html>

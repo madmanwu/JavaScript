@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		td{
+			width: 60px;
+			height: 60px;
+			text-align: center;
+			line-height: 60px;
+		}
+	</style>
+</head>
+<body>
+	<table id="table" border="1">
+		<tr>
+			<td>1</td>
+			<td>2</td>
+			<td>3</td>
+			<td>4</td>
+			<td>5</td>
+		</tr>
+		<tr>
+			<td>1</td>
+			<td>2</td>
+			<td>3</td>
+			<td>4</td>
+			<td>5</td>
+		</tr>
+		<tr>
+			<td>1</td>
+			<td>2</td>
+			<td>3</td>
+			<td>4</td>
+			<td>5</td>
+		</tr>
+		<tr>
+			<td>1</td>
+			<td>2</td>
+			<td>3</td>
+			<td>4</td>
+			<td>5</td>
+		</tr>
+		<tr>
+			<td>1</td>
+			<td>2</td>
+			<td>3</td>
+			<td>4</td>
+			<td>5</td>
+		</tr>
+	</table>
+</body>
+<script>
+	var table = document.getElementById("table");
+	var tr = table.rows[0];
+	var td = tr.cells;
+	var flag = false;
+	for(var i=0;i<td.length;i++){
+		td[i].setAttribute("index",i);
+		td[i].onmousedown = function(){
+			start = this.getAttribute("index");
+			flag = true;
+		}
+		document.onmousemove = function(){
+			var e = window.event || e;
+			var src = e.target || e.srcElement;
+			end = parseInt(src.getAttribute("index"));
+			if(flag){
+				if(start<end){
+					end = end+1;
+				}
+				for(var j=0;j<table.rows.length;j++){
+					table.rows[j].insertBefore(table.rows[j].cells[start],table.rows[j].cells[end]);
+				}
+				for(var k=0;k<td.length;k++){
+					td[k].setAttribute("index",k);
+				}
+			}
+		}
+		document.onmouseup= function(){
+			flag = false;
+		}
+	}
+</script>
+</html> 

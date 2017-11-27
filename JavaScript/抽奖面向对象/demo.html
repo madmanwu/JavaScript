@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<link rel="stylesheet" href="css/reset.css" />
+		<link rel="stylesheet" href="css/style.css" />
+		<script type="text/javascript" src="js/jquery-1.11.3.min.js" ></script>
+	</head>
+	<body>
+		<div id="wrap">
+			<div class="chuangliang">
+				<img src="img/chuanglian_01.png" class="left" />
+				<img src="img/chuanglian_03.png"  class="right"  />
+			</div>
+			<div class="main">
+				<img src="img/houzi_03.png" class="houzi"  />
+				<div class="tv_box">
+					<img src="img/tv_03.png" />
+					<div class="wen" id='wen'>中奖姓名</div>
+					<a href="javascript:;" class="btn_play" id='btn_play'></a>
+					<a href="javascript:;" class="btn_stop" id='btn_stop'></a>
+				</div>
+				<img src="img/tai_03.png"  class="wutai" />
+			</div>
+		</div>
+
+		<!--中奖弹框，自己写样式,写主题内容-->
+		<div id="drawnBox">
+-  
+		</div>
+</body>
+<script>
+	var obj = [
+				{"name" : "小红","src":"img/3.jpg"},
+				{"name" : "小绿","src":"img/4.jpg"},
+				{"name" : "小仙女","src":"img/5.jpg"}
+				];
+	function Fn(){
+		this.begin = document.getElementsByClassName("btn_play")[0];
+		this.stop = document.getElementsByClassName("btn_stop")[0];
+		this.nam = document.getElementById("wen");
+		this.tan = document.getElementById("drawnBox");
+		this.zhe = document.getElementById("drawnBox");
+		this.num = null;
+		this.count = 3;
+		this.active();
+	}
+	Fn.prototype={
+		active:function(){
+			var that = this;
+			this.timer = null;
+			this.begin.onclick = function(){
+				that.count--;
+				if(that.count >= 0){
+					that.timer = setInterval(function(){
+						that.num = that.ran(0,obj.length-1);
+						that.nam.innerHTML = obj[that.num].name;
+					},300);
+					this.style.display = "none";
+					that.stop.style.display = "block";
+				}else{
+					alert("今天抽奖结束！");
+				}
+			}
+			this.stop.onclick = function(){
+				this.style.display = "none";
+				that.begin.style.display = "block";
+				clearInterval(that.timer);
+				var box = document.createElement("box");
+				var h2 = document.createElement("h2");
+				box.innerHTML = '<img src "'+obj[that.num].src+'">';
+				h2.innerHTML = obj[that.num].name;
+				h2.innerHTML = '恭喜'+obj[that.num].name+'同学';
+				that.zhe.appendChild(box);
+				that.zhe.appendChild(h2);
+				obj.splice(that.num,1);
+				that.zhe.style.display = "block";
+				setTimeout(function(){
+					that.zhe.style.display = "none";
+					that.zhe.innerHTML = "";
+					that.nam.innerHTML = "中将姓名";
+				},3000);
+			}
+		},
+		ran:function(min,max){
+			return Math.floor(Math.random()*(max-min+1)+min);
+		}
+	}
+	new Fn();
+</script>
+</html>

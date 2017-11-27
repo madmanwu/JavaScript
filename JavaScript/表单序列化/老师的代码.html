@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<form action="login.php" name="my">
+		user:<input type="text" name="user">
+		password:<input type="password" name="password">
+		<input type="radio" value="nv" name="sex">女
+		<input type="radio" value="nan" name="sex">男
+		<select name="school" type="select-one">
+			<option>八维</option>
+			<option>清华</option>
+			<option>北大</option>
+		</select>
+		<!---multiple特性多选-->
+		<select name="class" type="select-multiple" multiple>
+			<option>1507J</option>
+			<option>1507F</option>
+			<option>1507E</option>
+		</select>
+		<!-- <input type="button" name="submit2" value="提交1"> -->
+		<input type="submit" value="提交" name="submit">
+	</form>
+</body>
+<script>
+	var forms=document.forms['my'];
+	var sub=forms.elements['submit'];
+	function selectForm(forms){
+		var formsEle=forms.elements;
+		var arr=[];
+		for(var i=0;i<formsEle.length;i++)
+			var a=formsEle[i];
+			switch(a.type){
+				case 'email':
+				case 'image':
+				case 'file':
+				case 'button':
+				case 'submit':
+				case 'select-one':
+				case 'select-multiple':                                    
+				/*for(var j=0;j<a.options.length;j++){
+					if(!a.options[j].selected){
+						arr.push(a.name+'='+a.value)
+					}
+				}*/
+				break;
+				case 'radio':
+				if(!a.checked)
+				break;
+				default:
+				arr.push(a.name+'='+a.value)
+			}
+		}
+		return arr.join('&');
+	}
+	//console.log(selectForm(forms));
+
+	forms.onsubmit=function(){
+		alert(selectForm(forms));
+		return false;
+	}
+
+</script>
+</html>

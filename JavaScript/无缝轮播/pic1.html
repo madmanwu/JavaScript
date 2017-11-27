@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		*{padding:0;margin:0;list-style:none;}
+		#wrap{width:500px;height:200px;margin:100px auto;position:relative;overflow:hidden;}
+		#wrap ul{width:3000px;position:absolute;left:0;top:0;}
+		#wrap ul li{float:left;width:500px;height:200px;}
+		#wrap>div{width:30px;height:60px;background:red;position:absolute;top:50%;margin-top:-30px;cursor:pointer;}
+		#wrap>div#left{left:0;}
+		#wrap>div#right{right:0;}
+		#indexBox{position:absolute;z-index:10;bottom:10px;right:10px;}
+		#indexBox li{display:inline-block;width:20px;height:20px;background:red;text-align:center;line-height:20px;color:#fff;margin-right:2px;cursor:pointer;}
+		#indexBox li.active{background:blue;}
+	</style>
+</head>
+<body>
+	<div id="wrap">
+		<ul>
+			<li><img src="images/1.jpg" alt=""></li>
+			<li><img src="images/2.jpg" alt=""></li>
+			<li><img src="images/3.jpg" alt=""></li>
+			<li><img src="images/4.jpg" alt=""></li>
+		</ul>
+		<ol id="indexBox"></ol>
+		<div id="left"></div>
+		<div id="right"></div>
+	</div>
+</body>
+<script type="text/javascript" src="move.js"></script>
+<script>
+	function slideImg(box){
+		this.timer=null;
+		//计数器
+		this.count=0;
+		//索引计数器
+		this.ind=0;
+		//大盒子
+		this.box=document.getElementById(box);
+		//ul
+		this.ul=this.box.getElementsByTagName('ul')[0];
+		//li
+		this.lis=this.ul.getElementsByTagName('li');
+		//left
+		this.left=document.getElementById('left');
+		this.right=document.getElementById('right');
+		//ol
+		this.ol=this.box.getElementsByTagName('ol')[0];
+		this.init();
+		this.bindclick();
+		this.auto();
+	}
+	slideImg.prototype={
+		init:function(){
+			//有多少张图片
+			var len=this.lis.length;
+			for(var i=0;i<len;i++){
+				this.ollis=document.createElement('li');
+				this.ollis.innerHTML=i+1;
+				this.ol.appendChild(this.ollis);
+			}
+			this.ol.firstChild.className='active';
+			//第一li复制出来
+			var newli=this.lis[0].cloneNode(true);
+			this.ul.appendChild(newli);
+			//算ul宽度
+			this.ul.style.width=this.lis.length*this.lis[0].offsetWidth+'px';
+			this.ols=this.ol.getElementsByTagName('li');
+		},
+		bindclick:function(){
+			var that=this;
+			this.right.onclick=function(){
+				if(that.count==that.lis.length-1){
+					that.ul.style.left=0;
+					that.count=0;
+				}
+				that.count++;
+				
+				that.ind++;
+				if(that.ind>that.ols.length-1){
+					that.ind=0
+				}
+				that.change();
+			}
+			//左边按钮
+			this.left.onclick=function(){
+				if(that.count==0){
+					that.ul.style.left=-(that.lis.length-1)*that.lis[0].offsetWidth+'px';
+					that.count=that.lis.length-1;
+				}
+				that.count--;
+				that.ind--;
+				if(that.ind<0){
+					that.ind=that.ols.length-1
+				}
+				that.change();
+			}
+			this.box.onmouseover=function(){
+				clearInterval(that.timer);
+			}
+			this.box.onmouseout=function(){
+				that.auto();
+			}
+			//滑过li
+			this.ol.onmouseover=function(e){
+				var e= e || window.event;
+				var tar=e.target || e.srcElement;
+				if(tar.tagName=='LI'){
+					//li索引
+					var ind=parseInt(tar.innerHTML)-1;
+					//当前图片
+					that.count=ind;
+					//当前显示小方块
+					that.ind=ind;
+					that.change();
+				}
+			}
+		},
+		auto:function(){
+			var that=this;
+			this.timer=setInterval(function(){
+				that.right.onclick();
+			},2000)
+		},
+		change:function(){
+			var ols=this.ol.getElementsByTagName('li');
+			for(var i=0;i<ols.length;i++){
+				ols[i].className='';
+			}
+			ols[this.ind].className='active';
+			var target=-this.count*this.lis[0].offsetWidth;
+			move(this.ul,target);
+		}
+	}
+	new slideImg('wrap');
+</script>
+</html>

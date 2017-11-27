@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<form action="log.php" name="my">
+		用户名：<input type="text" name="user">
+		密码：<input type="password" name="password">
+		<input type="radio" name="sex1" selectedz>女
+		<input type="radio" name="sex2">男
+		<select name="" id="">
+			<option value="">吃饭饭</option>
+			<option value="">睡睡觉</option>
+			<option value="">打豆豆</option>
+		</select>
+		<select name="" id="" "select-mulitavk">
+			<option value="">吃饭</option>
+			<option value="">睡觉</option>
+			<option value="">打豆豆</option>
+		</select>
+		<button id="btn">提交</button>
+	</form>
+</body>
+<script>
+	var forms = document.forms["my"];
+	var user = forms.elements["user"];
+	var pass = forms.elements["pass"];
+	var sex1 = forms.elements["sex1"];
+	var sex2 = forms.elements["sex2"];
+	var btn = document.getElementById("btn");
+	btn.onclick = function(){
+		if(forms.onsubmit){
+			forms.onsubmit();
+		}
+	}
+	forms.onsubmit = function(){
+		if(user.value == ""){
+			alert("用户名不能为空");
+			return false;
+		}else if(pass.value == ""){
+			alert("密码不能为空");
+			return false;
+		}
+		return true;
+	}
+	/*function fn(forms){
+		var formsEle = froms.elements;
+		var arr=[];
+		for(var i=0;i<formsEle.length;i++){
+			var a = formsEle[i];
+			switch(a.type){
+				case "file":
+				case "image":
+				break;
+				if(!a.checked)
+				default:
+				arr.push(a.name+"="+a.value);
+			}
+		}
+		return arr;
+	}*/
+</script>	
+</html>
+
+
+
+
+
+

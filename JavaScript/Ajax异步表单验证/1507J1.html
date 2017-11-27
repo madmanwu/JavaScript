@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	用户名:<input type="text" id="text">
+	密码:<input type="text" id="pass">
+	<button id="btn">登录</button>
+	<script>
+		var text=document.getElementById('text');
+		var pass=document.getElementById('pass');
+		var btn=document.getElementById('btn');
+
+		if(window.XMLHttpRequest){
+			var xml=new XMLHttpRequest();
+		}else{
+			xml=new ActiveXObject('Microsoft.XMLHttp');
+		}
+		var tval,pval;
+		btn.onclick=function(){
+			tval=text.value;
+			pval=pass.value;
+
+			xml.open('get','user.json');
+			// xml.open("get","a.txt?"+new Date().getTime(),true);
+
+			xml.send();
+
+			xml.onreadystatechange=function(){
+				if(xml.readyState==4 && xml.status==200){
+					//console.log(typeof xml.responseText)
+					var dataArr=JSON.parse(xml.responseText);
+					alert(showInfo(dataArr));
+				}
+			}
+
+		}
+
+		function showInfo(arr){
+			console.log(arr);
+			console.log(tval);
+			console.log(pval);
+			for(var i=0;i<arr.length;i++){
+				if(arr[i].name==tval && arr[i].pass==pval){
+					return '登录成功'
+				}
+			}
+			return '登录失败'
+		}
+	</script>
+</body>
+</html>

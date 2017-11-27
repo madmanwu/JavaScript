@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<div id="div"></div>
+	<script>
+	//原型式继承
+	 //借助原型可以基于已有的对象创建新对象
+		function parent(){
+			this.name="1507J";
+			this.friend=['1507F','1507E']
+		}
+		var aa=new parent();
+		parent.prototype.sayname=function(){
+			alert('1244');
+		}
+		function createobject(Obj){
+			function f(){};
+			f.prototype=Obj;
+			return new f();
+		}
+
+		var bb=createobject(aa);
+		//bb.friend.push('1508F');
+		var o=Object.create(aa);
+		
+		//寄生式继承
+		//在函数内部完成对象方法和属性的操作返回该对象
+		function fun(obj){
+			var clone=createobject(obj);
+			clone.friend=['1507F','1507E','1508F'];
+			return clone;
+		}
+
+		var n=fun(aa);
+		alert(n.friend);
+		alert(bb.friend);
+		alert(o.friend);
+	</script>
+</body>
+</html>

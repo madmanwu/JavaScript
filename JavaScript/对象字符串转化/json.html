@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+      var boj = {
+      	 name:"田旭",
+      	 age:18,
+         class:['1507F','1507J','1507E']
+      }
+		// console.log(JSON.stringify(obj,["name","age"],1))
+		//json 一种轻量级的数据格式
+		//存储简单值 数组 对象
+		// 2数组只显示数组里的值 函数 key value
+		// 3缩进
+		console.log(JSON.stringify(boj,function(key,value){
+			switch(key){
+				case 'name':
+				return '网站工程'
+				case 'age':
+				return 1
+				case 'class':
+				return 123
+			}
+			return value;
+		},10));
+
+	</script>
+</body>
+</html>
